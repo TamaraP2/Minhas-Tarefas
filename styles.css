@@ -35,25 +35,25 @@ body {
   grid-template-rows: 1fr 1fr 1fr 1fr; 
   /* overflow-x: scroll; */
 }
-
-#horario-inicial {
-  width: 70%;
+/* 
+#horario-inicial,
+#tarefa,
+#duracao,
+.button {
 }
+  */
 
-#tarefa {
-  width: 40%;
-}
-
-#duracao {
-  width: 12%;
+#duracao { 
+  margin-top: 20px;
 } 
 
 .button {
   border: 0.1rem inset #8f8d8d; 
-  text-align: center;
-  width: 12%;
-  display: inline-block;
-  height: 35px;
+  text-align: center; 
+  display: block;
+  margin: 20px auto 0;
+  height: 45px; 
+  width: 35%;
   background-color: rgba(255, 255, 255, 0.651);
   /* padding: 8px 5px; */
   border-width: 2px;
@@ -69,8 +69,10 @@ p {
 input {
   /* padding: 8px 10px; */
   background-color: rgba(255, 255, 255, 0.219);
-  display: inline-block;
-  height: 35px;
+  display: block;
+  margin: 0 auto;
+  height: 45px;
+  width: 35%;
 }
 
 .button,

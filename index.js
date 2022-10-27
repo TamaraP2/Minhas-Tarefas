@@ -10,6 +10,10 @@ document.querySelector(".button").addEventListener("click", function(e) {
     e.preventDefault();
     console.log(tarefas);
     
+    if (document.getElementById("horario-inicial").value !== "") {
+        let horarioInicial = document.getElementById("horario-inicial").value;
+    }
+
     if (document.getElementById("tarefa").value !== "" && document.getElementById("duracao").value !== "") { 
 
         let tarefa = {nome: document.getElementById("tarefa").value, duracao: Number(document.getElementById("duracao").value)};
