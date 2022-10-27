@@ -13,16 +13,36 @@
 	<body> 
 
 		<div class="all">
-			<h1>Tarefas de Hoje</h1> 
 
-			<p>Digite a tarefa e sua duração em minutos</p>
+			<div class="input">
+				<h1>Tarefas de Hoje</h1> 
 
-			<input type="text" placeholder="Nome da tarefa">
-			<input type="number" min="0" step="1" placeholder="Duração">   
+				<p class="tamara">Desenvolvido por <span class="tamarap">Tamara P</span></p>
 
-			<footer class="tamara">Desenvolvido por <span class="tamarap">Tamara P</span></footer>  
-			<script src="index.js"></script>
+				<div class="digite-horario">
+					<p>Digite o horário que deseja começar a fazer suas tarefas:</p>
+					
+					<input type="number" min="0" step="1" placeholder="Horário que deseja começar" id="horario-inicial">   
+				</div>
+
+				<div class="digite-tarefa-duracao">
+					<p>Digite a tarefa e sua duração em minutos:</p>
+
+					<form>
+						<input type="text" placeholder="Nome da tarefa" id="tarefa">
+						<input type="number" min="0" step="1" placeholder="Duração" id="duracao">   
+						<button class="button">Enviar</button>
+					</form>
+				</div>
+			</div>
+				
+			<div class="output">
+				<div class="tarefas"></div> 
+			</div>
+
 		</div>
+		
+		<script src="index.js"></script>
 	</body>
 
 </html>
