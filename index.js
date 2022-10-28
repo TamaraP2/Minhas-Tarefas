@@ -7,6 +7,7 @@ let tarefas = [];
 let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
+let duracaoString;
 
 document.querySelector(".button").addEventListener("click", function(e) {
 
@@ -26,7 +27,8 @@ document.querySelector(".button").addEventListener("click", function(e) {
         
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="lista-tarefas" id="tarefa-${tarefas.length}"></p>`);
 
-        let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${tarefa.duracao.replace(":", "h") + "min"})`;
+        // let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${tarefa.duracao.replace(":", "h") + "min"})`;
+        let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${duracaoString})`;
 
         document.getElementById(`tarefa-${tarefas.length}`).innerText = textoTarefa;
         
@@ -51,6 +53,8 @@ function calculaHorarios () {
     let duracaoHoras = Number(duracaoTotal[0]);
     let duracaoMinutos = Number(duracaoTotal[1]);
         
+    formatacaoDuracao(duracaoHoras, duracaoMinutos);
+
     let horaExtra = 0;
 
     let somaMinutos = inicioTarefaMinutos + duracaoMinutos;
@@ -69,3 +73,21 @@ function calculaHorarios () {
     console.log("finalTarefa = " + finalTarefa); 
  
 }
+
+
+function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
+ 
+    if (duracaoHoras === 0) {
+        duracaoString = duracaoMinutos.toString() + "min";
+    }
+    else {
+        duracaoString = duracaoHoras.toString() + "h" + duracaoMinutos.toString() + "min";  
+    }
+
+}
+
+
+
+
+
+
