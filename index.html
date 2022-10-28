@@ -11,26 +11,25 @@
 	</head>
 
 	<body> 
+		
+		<h1>Minhas Tarefas</h1> 
 
 		<div class="all">
-
 			<div class="input">
-				<h1>Minhas Tarefas</h1> 
 
-				<p class="tamara">Desenvolvido por <span class="tamarap">Tamara P</span></p>
-
+				
 				<div class="digite-horario">
-					<p>Digite o horário que deseja começar a fazer suas tarefas:</p>
+					<p>Digite o horário que deseja começar a fazer suas tarefas</p>
 					
-					<input type="number" min="0" step="1" placeholder="Horário que deseja começar" id="horario-inicial">   
+					<input type="time" placeholder="Horário que deseja começar" id="horario-inicial">   
 				</div>
 
 				<div class="digite-tarefa-duracao">
-					<p>Digite a tarefa e sua duração em minutos:</p>
+					<p>Digite a tarefa e sua duração (hh:mm)</p>
 
 					<form>
 						<input type="text" placeholder="Nome da tarefa" id="tarefa">
-						<input type="number" min="0" step="1" placeholder="Duração" id="duracao">   
+						<input type="time" placeholder="Duração" id="duracao">   
 						<button class="button">Enviar</button>
 					</form>
 				</div>
@@ -39,10 +38,11 @@
 			<div class="output">
 				<div class="tarefas"></div> 
 			</div>
-
 		</div>
+		
+		<!-- <p class="tamara">Desenvolvido por <span class="tamarap">Tamara P</span></p> -->
 
 		<script src="index.js"></script>
 	</body>
-
-</html>
+	
+	</html>
