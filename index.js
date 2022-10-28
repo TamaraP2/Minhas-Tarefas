@@ -3,22 +3,22 @@
 /* ====================== VARIAVEIS ===================== */
 /* ====================================================== */
  
-let tarefas = []; 
+let tarefas = [];  
 let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
 
 document.querySelector(".button").addEventListener("click", function(e) {
+
     e.preventDefault();
     
     if (document.getElementById("horario-inicial").value !== "") {
-        horarioInicial = document.getElementById("horario-inicial").value;
+        horarioInicial = document.getElementById("horario-inicial").value; 
     }
     
     if (document.getElementById("tarefa").value !== "" && document.getElementById("duracao").value !== "") { 
         
-        calculaHorarios();
-        
+        calculaHorarios(); 
 
         let tarefa = {nome: document.getElementById("tarefa").value, duracao: document.getElementById("duracao").value, inicio: inicioTarefa, final: finalTarefa};
         
@@ -26,9 +26,15 @@ document.querySelector(".button").addEventListener("click", function(e) {
         
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="lista-tarefas" id="tarefa-${tarefas.length}"></p>`);
 
-        document.getElementById(`tarefa-${tarefas.length}`).innerText = document.getElementById("tarefa").value;
+        let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${tarefa.duracao.replace(":", "h") + "min"})`;
+
+        document.getElementById(`tarefa-${tarefas.length}`).innerText = textoTarefa;
         
         console.log(tarefas);
+
+        document.getElementById("tarefa").value = "";
+        document.getElementById("duracao").value = "";
+        document.getElementById("tarefa").focus();
     }
 });
 

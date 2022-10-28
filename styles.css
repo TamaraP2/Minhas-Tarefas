@@ -87,6 +87,10 @@ input {
   font-size: 1rem;
 }
 
+.output {
+  text-align: left;
+}
+
 .button,
 input::placeholder {
   color: black;
