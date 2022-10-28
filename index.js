@@ -3,8 +3,7 @@
 /* ====================== VARIAVEIS ===================== */
 /* ====================================================== */
  
-let tarefas = [];
-// let elDuracao = document.getElementById("duracao").value;
+let tarefas = []; 
 let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
@@ -34,42 +33,33 @@ document.querySelector(".button").addEventListener("click", function(e) {
 });
 
 
-function calculaHorarios () {
+function calculaHorarios () { 
 
-    if (tarefas.length === 0) { 
+    tarefas.length === 0 ? inicioTarefa = horarioInicial : inicioTarefa = tarefas[tarefas.length-1].final;
 
-        inicioTarefa = horarioInicial;
-        finalTarefa = inicioTarefa; 
+    let inicioTarefaTotal = inicioTarefa.split(":");
+    let inicioTarefaHoras = Number(inicioTarefaTotal[0]);
+    let inicioTarefaMinutos = Number(inicioTarefaTotal[1]);
+
+    let duracaoTotal = document.getElementById("duracao").value.split(":");
+    let duracaoHoras = Number(duracaoTotal[0]);
+    let duracaoMinutos = Number(duracaoTotal[1]);
         
-        // finalTarefa = horarioInicial + elDuracao;
-        //               10:00          +     00:30
-         
-        
-        if (inicioTarefa[0] === '0' && inicioTarefa[1] === '0') {
- 
-            if (document.getElementById("duracao").value[0]  === '0' && document.getElementById("duracao").value[1]  === '0') {
-                
-                finalTarefa = finalTarefa.split(":");
-                let duracao = document.getElementById("duracao").value.split(":");
+    let horaExtra = 0;
 
-                finalTarefa[1] = duracao[1];
-                finalTarefa = finalTarefa.join(":");
+    let somaMinutos = inicioTarefaMinutos + duracaoMinutos;
 
-                console.log("final tarefa = " + finalTarefa);
-                console.log("duracao = " + duracao);
-                // let finalTarefa
-                // duracao[1] 
-            }
-            // finalTarefa = finalTarefa.split(":");
-            // let inicioTarefaMin = inicioTarefa.split(":").pop();
-
-            // finalTarefa[1] = inicioTarefaMin;
- 
- 
-        }
+    if (somaMinutos > 59) {        
+        somaMinutos = somaMinutos - 60;
+        horaExtra++; 
     }
 
-    else  { 
-        inicioTarefa = tarefas[tarefas.length-1].termino;
-    }
+    let somaHoras = inicioTarefaHoras + duracaoHoras + horaExtra;
+
+    let finalTarefaParcial = [somaHoras.toString().padStart(2, "0"), ":", somaMinutos.toString().padStart(2, "0")];
+
+    finalTarefa = finalTarefaParcial.join("");
+
+    console.log("finalTarefa = " + finalTarefa); 
+ 
 }
