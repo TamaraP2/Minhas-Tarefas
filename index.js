@@ -25,7 +25,7 @@ document.querySelector(".button").addEventListener("click", function(e) {
         
         tarefas.push(tarefa);     
         
-        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="lista-tarefas" id="tarefa-${tarefas.length}"></p>`);
+        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="lista-tarefas" draggable="true" id="tarefa-${tarefas.length}"></p>`);
 
         // let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${tarefa.duracao.replace(":", "h") + "min"})`;
         let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${duracaoString})`;
@@ -65,6 +65,10 @@ function calculaHorarios () {
     }
 
     let somaHoras = inicioTarefaHoras + duracaoHoras + horaExtra;
+    
+    if (somaHoras > 23) {
+        somaHoras = somaHoras - 24;
+    }
 
     let finalTarefaParcial = [somaHoras.toString().padStart(2, "0"), ":", somaMinutos.toString().padStart(2, "0")];
 
@@ -81,7 +85,12 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
         duracaoString = duracaoMinutos.toString() + "min";
     }
     else {
-        duracaoString = duracaoHoras.toString() + "h" + duracaoMinutos.toString() + "min";  
+        if (duracaoMinutos === 0) {
+            duracaoString = duracaoHoras.toString() + "h";  
+        }
+        else {
+            duracaoString = duracaoHoras.toString() + "h" + duracaoMinutos.toString() + "min";  
+        }
     }
 
 }
