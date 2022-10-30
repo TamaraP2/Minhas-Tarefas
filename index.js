@@ -26,6 +26,7 @@ document.querySelector(".button").addEventListener("click", function(e) {
         tarefas.push(tarefa);     
         
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="lista-tarefas" draggable="true" id="tarefa-${tarefas.length}"></p>`);
+        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<div class="dropzones">&nbsp;</div>`);
 
         // let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${tarefa.duracao.replace(":", "h") + "min"})`;
         let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${duracaoString})`;
@@ -37,6 +38,8 @@ document.querySelector(".button").addEventListener("click", function(e) {
         document.getElementById("tarefa").value = "";
         document.getElementById("duracao").value = "";
         document.getElementById("tarefa").focus();
+
+        dragAndDrop();
     }
 });
 
@@ -96,7 +99,47 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
 }
 
 
+function dragAndDrop() {
 
+    // let dropzone = true;
 
+    let listaTarefas = document.querySelectorAll(".lista-tarefas");
+        
+    listaTarefas.forEach(tarefa => {
+
+        tarefa.addEventListener('dragstart', function () {     
+            this.classList.add("is-dragging");
+        });
+ 
+        tarefa.addEventListener('dragend', function () {    
+            this.classList.remove('is-dragging');
+            // this.classList.remove('dropzones');
+        });
+    });
+  
+
+    document.querySelectorAll(".dropzones").forEach(dropzone => {
+
+        dropzone.addEventListener("dragenter", function (event) {
+            event.preventDefault();
+        });
+    
+        dropzone.addEventListener("dragover", function (event) {
+            event.preventDefault();
+            // this.insertAdjacentHTML("beforeend", cardBeingDragged.innerHTML);
+            // const cardBeingDragged = document.querySelector(".is-dragging");              
+            // this.appendChild(cardBeingDragged); 
+        });
+
+        dropzone.addEventListener("drop", function () { 
+            const cardBeingDragged = document.querySelector(".is-dragging");  
+            this.appendChild(cardBeingDragged);  
+            this.classList.remove('dropzones');
+            cardBeingDragged.insertAdjacentHTML("beforebegin", `<div class="dropzones laranja">&nbsp;</div>`);
+            cardBeingDragged.insertAdjacentHTML("afterend", `<div class="dropzones laranja">&nbsp;</div>`);
+        });
+    });
+  
+}
 
 

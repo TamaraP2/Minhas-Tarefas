@@ -113,6 +113,24 @@ input::placeholder {
   font-size: 1.3rem; 
 }
 
+.over {
+  background: red;
+}
+
+.is-dragging {
+  background-color: blueviolet;
+}
+
+.dropzones {
+  background-color: green;  
+  font-size: 1.3rem; 
+}
+
+.laranja {
+  background-color: orange;
+  border: 2px black solid;
+}
+
 /* ====================================================== */
 /* ==================== MEDIA QUERIES =================== */
 /* ====================================================== */
