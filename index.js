@@ -26,7 +26,7 @@ document.querySelector(".button").addEventListener("click", function(e) {
         tarefas.push(tarefa);     
         
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="lista-tarefas" draggable="true" id="tarefa-${tarefas.length}"></p>`);
-        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<div class="dropzones">&nbsp;</div>`);
+        // document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="dropzones">&nbsp;</p>`);
 
         // let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${tarefa.duracao.replace(":", "h") + "min"})`;
         let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${duracaoString})`;
@@ -118,7 +118,7 @@ function dragAndDrop() {
     });
   
 
-    document.querySelectorAll(".dropzones").forEach(dropzone => {
+    document.querySelectorAll(".tarefas").forEach(dropzone => {
 
         dropzone.addEventListener("dragenter", function (event) {
             event.preventDefault();
@@ -135,8 +135,14 @@ function dragAndDrop() {
             const cardBeingDragged = document.querySelector(".is-dragging");  
             this.appendChild(cardBeingDragged);  
             this.classList.remove('dropzones');
-            cardBeingDragged.insertAdjacentHTML("beforebegin", `<div class="dropzones laranja">&nbsp;</div>`);
-            cardBeingDragged.insertAdjacentHTML("afterend", `<div class="dropzones laranja">&nbsp;</div>`);
+
+            // if (this.nextElementSibling !== '<p class="dropzones">&nbsp;</p>') {
+            //     cardBeingDragged.insertAdjacentHTML("afterend", `<p class="dropzones laranja">&nbsp;</p>`);
+            // }
+
+            // if (this.previousElementSibling !== '<p class="dropzones">&nbsp;</p>') {
+            // cardBeingDragged.insertAdjacentHTML("beforebegin", `<p class="dropzones laranja">&nbsp;</p>`);
+            // }
         });
     });
   
