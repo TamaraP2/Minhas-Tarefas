@@ -25,7 +25,7 @@ document.querySelector(".button").addEventListener("click", function(e) {
         
         tarefas.push(tarefa);     
         
-        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="lista-tarefas" draggable="true" id="tarefa-${tarefas.length}"></p>`);
+        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${tarefas.length}"></p>`);
         // document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="dropzones">&nbsp;</p>`);
 
         // let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${tarefa.duracao.replace(":", "h") + "min"})`;
@@ -100,50 +100,31 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
 
 
 function dragAndDrop() {
-
-    // let dropzone = true;
-
-    let listaTarefas = document.querySelectorAll(".lista-tarefas");
-        
-    listaTarefas.forEach(tarefa => {
+  
+    document.querySelectorAll(".tarefa-item").forEach(tarefa => {
 
         tarefa.addEventListener('dragstart', function () {     
             this.classList.add("is-dragging");
         });
  
         tarefa.addEventListener('dragend', function () {    
-            this.classList.remove('is-dragging');
-            // this.classList.remove('dropzones');
+            this.classList.remove('is-dragging'); 
         });
     });
   
 
-    document.querySelectorAll(".tarefas").forEach(dropzone => {
+    document.querySelector(".tarefas").addEventListener("dragenter", function (event) {
+        event.preventDefault();
+    });
 
-        dropzone.addEventListener("dragenter", function (event) {
-            event.preventDefault();
-        });
-    
-        dropzone.addEventListener("dragover", function (event) {
-            event.preventDefault();
-            // this.insertAdjacentHTML("beforeend", cardBeingDragged.innerHTML);
-            // const cardBeingDragged = document.querySelector(".is-dragging");              
-            // this.appendChild(cardBeingDragged); 
-        });
+    document.querySelector(".tarefas").addEventListener("dragover", function (event) {
+        event.preventDefault(); 
+    });
 
-        dropzone.addEventListener("drop", function () { 
-            const cardBeingDragged = document.querySelector(".is-dragging");  
-            this.appendChild(cardBeingDragged);  
-            this.classList.remove('dropzones');
-
-            // if (this.nextElementSibling !== '<p class="dropzones">&nbsp;</p>') {
-            //     cardBeingDragged.insertAdjacentHTML("afterend", `<p class="dropzones laranja">&nbsp;</p>`);
-            // }
-
-            // if (this.previousElementSibling !== '<p class="dropzones">&nbsp;</p>') {
-            // cardBeingDragged.insertAdjacentHTML("beforebegin", `<p class="dropzones laranja">&nbsp;</p>`);
-            // }
-        });
+    document.querySelector(".tarefas").addEventListener("drop", function () { 
+        const cardBeingDragged = document.querySelector(".is-dragging");  
+        this.appendChild(cardBeingDragged);  
+        this.classList.remove('dropzones'); 
     });
   
 }
