@@ -8,6 +8,7 @@ let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
 let duracaoString;
+let variavel = false;
 
 document.querySelector(".button").addEventListener("click", function(e) {
 
@@ -38,8 +39,8 @@ document.querySelector(".button").addEventListener("click", function(e) {
         document.getElementById("tarefa").value = "";
         document.getElementById("duracao").value = "";
         document.getElementById("tarefa").focus();
-
-        dragAndDrop();
+ 
+        dragAndDrop(); 
     }
 });
 
@@ -94,8 +95,7 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
         else {
             duracaoString = duracaoHoras.toString() + "h" + duracaoMinutos.toString() + "min";  
         }
-    }
-
+    } 
 }
 
 
@@ -110,23 +110,38 @@ function dragAndDrop() {
         tarefa.addEventListener('dragend', function () {    
             this.classList.remove('is-dragging'); 
         });
-    });
-  
-
-    document.querySelector(".tarefas").addEventListener("dragenter", function (event) {
-        event.preventDefault();
-    });
+    }); 
 
     document.querySelector(".tarefas").addEventListener("dragover", function (event) {
         event.preventDefault(); 
-    });
+        let elementoSeguinte = pegaElementoSeguinte(event.clientY);
+        const cardBeingDragged = document.querySelector(".is-dragging"); 
 
-    document.querySelector(".tarefas").addEventListener("drop", function () { 
-        const cardBeingDragged = document.querySelector(".is-dragging");  
-        this.appendChild(cardBeingDragged);  
-        this.classList.remove('dropzones'); 
-    });
-  
+        if (elementoSeguinte === null) {
+            document.querySelector(".tarefas").appendChild(cardBeingDragged); 
+        }
+        else { 
+            document.querySelector(".tarefas").insertBefore(cardBeingDragged, elementoSeguinte); 
+        }
+    }); 
+
+    function pegaElementoSeguinte(y) {
+        let listaTarefas = [...document.querySelectorAll(".tarefa-item:not(.is-dragging)")];
+
+        return listaTarefas.reduce((valorInicial, child) => {
+            let retangulo = child.getBoundingClientRect();
+            let metadeRetangulo = y - retangulo.top - retangulo.height / 2;
+
+            if (metadeRetangulo < 0 && metadeRetangulo > valorInicial.offset) {
+                return { offset: valorInicial, element: child}                
+            }
+            else {
+                return valorInicial
+            }
+        }, {offset: Number.NEGATIVE_INFINITY}).element
+    }
+
+
 }
 
 

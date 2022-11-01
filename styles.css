@@ -111,25 +111,15 @@ input::placeholder {
 .tarefa-item {
   margin-left: 20px;
   font-size: 1.3rem; 
-}
-
-.over {
-  background: red;
-}
+} 
 
 .is-dragging {
-  background-color: blueviolet;
+  font-weight: bolder; 
 }
 
-.tarefas {
-  background-color: green;  
+.tarefas { 
   font-size: 1.3rem; 
-  border: 2px black solid;
-}
- 
-.laranja {
-  background-color: orange;
-}
+} 
 
 /* ====================================================== */
 /* ==================== MEDIA QUERIES =================== */
