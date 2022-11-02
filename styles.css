@@ -92,6 +92,7 @@ input {
 .output {   
 }
 
+.console, 
 .button,
 input::placeholder {
   color: black;
