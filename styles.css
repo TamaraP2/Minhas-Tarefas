@@ -14,11 +14,14 @@ body {
   /* background-image: url(images/background.jpg);
   background-size: cover; */ 
   /* background-repeat: no-repeat; */
-  /* background-size: auto; */
-  background-image: linear-gradient( 115deg, rgba(58, 58, 158, 0.6), rgba(136, 136, 206, 0.4) );
+  background-size: auto;
+  /* background-image: linear-gradient( 115deg, rgba(58, 58, 158, 0.6), rgba(136, 136, 206, 0.4) );
   background-image: linear-gradient( 115deg, rgba(68, 68, 228, 0.6), rgba(23, 23, 170, 0.8) );
   background-image: linear-gradient( 115deg, rgba(241, 177, 38, 0.6), rgba(23, 23, 170, 0.8) );
-  background-image: linear-gradient( 90deg, rgba(241, 177, 38, 0.85), rgba(23, 23, 170, 0.85) );
+  background-image: linear-gradient( 90deg, rgba(241, 177, 38, 0.85), rgba(23, 23, 170, 0.85) ); */
+  background-image: url(images/background\(11\).jpg);
+  background-size: cover; 
+  /* background-position: left;  */
   max-height: 96vh;
   display: flex;
   flex-direction: column;
