@@ -10,12 +10,8 @@ let inicioTarefa;
 let finalTarefa;
 let duracaoString;
 let bool = false; 
-let posicaoInicialItemMovimentado = -1;
-let posicaoFinalItemMovimentado; 
-let nome1;
-let duracao1;
-let nome2;
-let duracao2;
+let posicaoInicialItemMovimentado;
+let posicaoFinalItemMovimentado;  
 
 document.querySelector(".button").addEventListener("click", function(e) {
 
@@ -101,7 +97,7 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
         }
     } 
 }
-
+  
 
 function dragAndDrop() {
   
@@ -112,7 +108,7 @@ function dragAndDrop() {
             this.classList.add("is-dragging");
         });
  
-        tarefa.addEventListener('dragend', function () {    
+        tarefa.addEventListener('dragend', function () {     
             this.classList.remove('is-dragging'); 
         });
     }); 
@@ -120,7 +116,7 @@ function dragAndDrop() {
     document.querySelector(".tarefas").addEventListener("dragover", function (event) {
         event.preventDefault(); 
         let elementoSeguinte = pegaElementoSeguinte(event.clientY);
-        const cardBeingDragged = document.querySelector(".is-dragging"); 
+        const cardBeingDragged = document.querySelector(".is-dragging");  
 
         if (elementoSeguinte === null) {
             document.querySelector(".tarefas").appendChild(cardBeingDragged); 
@@ -132,6 +128,7 @@ function dragAndDrop() {
     }); 
 
     function pegaElementoSeguinte(y) {
+
         let listaTarefas = [...document.querySelectorAll(".tarefa-item:not(.is-dragging)")];
 
         return listaTarefas.reduce((valorInicial, child) => {
@@ -150,36 +147,58 @@ function dragAndDrop() {
     
     document.querySelector(".tarefas").addEventListener("drop", function (event) { 
         
-        if (bool === false) {
+        if (bool === false) {       // impede que o evento seja acionado mais de uma vez seguida
     
+            posicaoInicialItemMovimentado = event.target.id.slice(-1); 
+
             for (let i = 0; i < document.querySelectorAll(".tarefa-item").length; i++) {
 
                 let idNumber = document.querySelectorAll(".tarefa-item")[i].id.slice(-1); 
 
-                if (idNumber !== i && posicaoInicialItemMovimentado === -1) {
-                    posicaoInicialItemMovimentado = i;  
-                    // nome1 = tarefas[i].nome;
-                    // duracao1 = tarefas[i].duracao;
+                if (posicaoInicialItemMovimentado == idNumber) {
+                    posicaoFinalItemMovimentado = i;
                 }
+
+                // document.querySelector(".console").insertAdjacentHTML("beforeend", `idNumber = ${idNumber} <br>`); 
+
+                // if (idNumber != i && posicaoInicialItemMovimentado === -1) {
+                //     posicaoInicialItemMovimentado = i;    
+                // }
  
-                if (idNumber == posicaoInicialItemMovimentado) {
-                    posicaoFinalItemMovimentado = i;  
-                    // nome2 = tarefas[i].nome;
-                    // duracao2 = tarefas[i].duracao;
-                } 
+                // if (idNumber == posicaoInicialItemMovimentado) {
+                //     posicaoFinalItemMovimentado = i;   
+                // } 
             }
  
-            bool = true;
-  
-            let itemMovimentado = tarefas.splice(posicaoInicialItemMovimentado, 1);  
 
-            tarefas.splice(posicaoFinalItemMovimentado, 0, itemMovimentado[0]);
 
-            // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS DEPOIS = ${JSON.stringify(tarefas)} <br>`);  
-            // console.log("tarefas após splice: " + JSON.stringify(tarefas));
-            // FALTA RECALCULAR HORARIOS e ATUALIZAR IDS
-            
-            recalculaHorarios ();
+
+            if (posicaoFinalItemMovimentado != posicaoInicialItemMovimentado) {
+
+            // if (posicaoInicialItemMovimentado != -1 && posicaoFinalItemMovimentado != undefined) {
+
+                // document.querySelector(".console").insertAdjacentHTML("beforeend", `posicaoInicialItemMovimentado = ${posicaoInicialItemMovimentado} <br>`); 
+                
+                // document.querySelector(".console").insertAdjacentHTML("beforeend", `posicaoFinalItemMovimentado = ${posicaoFinalItemMovimentado} <br>`); 
+
+                bool = true;
+    
+                let itemMovimentado = tarefas.splice(posicaoInicialItemMovimentado, 1);  
+
+                // document.querySelector(".console").insertAdjacentHTML("beforeend", `itemMovimentado = ${JSON.stringify(itemMovimentado[0])} <br>`); 
+
+                // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS ANTES DE ADD ITEM MODIFICADO = ${JSON.stringify(tarefas)} <br>`); 
+                
+                tarefas.splice(posicaoFinalItemMovimentado, 0, itemMovimentado[0]);
+
+                // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS DEPOIS DE ADD ITEM MODIFICADO = ${JSON.stringify(tarefas)} <br>`); 
+
+                // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS DEPOIS = ${JSON.stringify(tarefas)} <br>`);  
+                // console.log("tarefas após splice: " + JSON.stringify(tarefas));
+                // FALTA RECALCULAR HORARIOS e ATUALIZAR IDS
+                
+                recalculaHorarios ();
+            }
         }
     });
 
@@ -216,7 +235,9 @@ function recalculaHorarios () {
         document.getElementById(`tarefa-${index}`).innerText = novoTexto;
     })
 
-    document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
+    // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
+
+    // posicaoInicialItemMovimentado = -1;
 }
 
   

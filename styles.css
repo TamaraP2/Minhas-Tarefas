@@ -89,7 +89,7 @@ input {
   text-align: center; 
 }
 
-.output {   
+.output {  
 }
 
 .console, 
@@ -120,6 +120,7 @@ input::placeholder {
 
 .tarefas { 
   font-size: 1.3rem; 
+  min-height: 70vh; 
 } 
 
 /* ====================================================== */
