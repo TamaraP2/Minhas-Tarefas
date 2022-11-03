@@ -9,7 +9,13 @@ let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
 let duracaoString;
-let bool = false;
+let bool = false; 
+let posicaoInicialItemMovimentado = -1;
+let posicaoFinalItemMovimentado; 
+let nome1;
+let duracao1;
+let nome2;
+let duracao2;
 
 document.querySelector(".button").addEventListener("click", function(e) {
 
@@ -145,20 +151,21 @@ function dragAndDrop() {
     document.querySelector(".tarefas").addEventListener("drop", function (event) { 
         
         if (bool === false) {
-   
-            let posicaoInicialItemMovimentado = -1;
-            let posicaoFinalItemMovimentado; 
-
+    
             for (let i = 0; i < document.querySelectorAll(".tarefa-item").length; i++) {
 
                 let idNumber = document.querySelectorAll(".tarefa-item")[i].id.slice(-1); 
 
                 if (idNumber !== i && posicaoInicialItemMovimentado === -1) {
                     posicaoInicialItemMovimentado = i;  
+                    // nome1 = tarefas[i].nome;
+                    // duracao1 = tarefas[i].duracao;
                 }
  
                 if (idNumber == posicaoInicialItemMovimentado) {
                     posicaoFinalItemMovimentado = i;  
+                    // nome2 = tarefas[i].nome;
+                    // duracao2 = tarefas[i].duracao;
                 } 
             }
  
@@ -184,6 +191,9 @@ function recalculaHorarios () {
 
     
     for (let i = 0; i < tarefas.length; i++) {
+  
+        // if (i === posicaoInicialItemMovimentado) {}
+ 
 
         i === 0 ? tarefas[i].inicio = horarioInicial : tarefas[i].inicio = tarefas[i-1].final 
 
@@ -206,7 +216,7 @@ function recalculaHorarios () {
         document.getElementById(`tarefa-${index}`).innerText = novoTexto;
     })
 
-    document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);  
+    document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
 }
 
   
