@@ -90,18 +90,20 @@ input {
   width: 35%;
   font-size: 1rem;
   text-align: center; 
-}
-
-.output {  
-}
+} 
 
 .console, 
-.button,
+.button, 
 input::placeholder {
   color: black;
-  font-size: 1rem; 
+  font-size: 1rem;  
 }
  
+.button:hover {
+  background-color: rgba(245,130,145,255);
+  color: white;
+  cursor: pointer;
+}
 
 .tamara {
   font-weight: bold;
@@ -115,6 +117,7 @@ input::placeholder {
 .tarefa-item {
   margin-left: 20px;
   font-size: 1.3rem; 
+  cursor: move;
 } 
 
 .is-dragging {
