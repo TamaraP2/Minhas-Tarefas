@@ -19,7 +19,7 @@ body {
   background-image: linear-gradient( 115deg, rgba(68, 68, 228, 0.6), rgba(23, 23, 170, 0.8) );
   background-image: linear-gradient( 115deg, rgba(241, 177, 38, 0.6), rgba(23, 23, 170, 0.8) );
   background-image: linear-gradient( 90deg, rgba(241, 177, 38, 0.85), rgba(23, 23, 170, 0.85) ); */
-  background-image: url(images/background\(11\).jpg);
+  background-image: url(images/background\.jpg);
   background-size: cover; 
   /* background-position: left;  */
   max-height: 96vh;
@@ -79,6 +79,7 @@ h1 {
 
 p {
   font-size: 1.4rem;
+  text-align: center;
 }
 
 input {
@@ -92,7 +93,7 @@ input {
   text-align: center; 
 } 
 
-.console, 
+.dica, 
 .button, 
 input::placeholder {
   color: black;
@@ -115,11 +116,12 @@ input::placeholder {
 }
 
 .tarefa-item {
-  margin-left: 20px;
+  /* margin-left: 20px; */
   font-size: 1.3rem; 
   cursor: move;
 } 
 
+.descricao,
 .is-dragging {
   font-weight: bolder; 
 }
