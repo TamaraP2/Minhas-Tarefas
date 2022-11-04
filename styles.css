@@ -131,17 +131,27 @@ input::placeholder {
   cursor: move;
   display: block;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  justify-items: center;
+  grid-template-columns: 10vw 20vw 10vw;
+  justify-items: center; 
+  border-top: 1px dashed black;
 } 
+ 
+p:last-child:not(.descricao) {
+  border-bottom: 1px dashed black;
+}
+
+/* 
+
+.tarefa-item::first-line {
+  border-top: 1px dashed black;
+} */
 
 .digite-horario,
 .descricao,
 .is-dragging {
   font-weight: bolder; 
 }
-
-.tarefas,
+ 
 .input {
   padding-top: 15px;
 }
@@ -152,8 +162,8 @@ input::placeholder {
  
 
 .tarefas { 
-  margin: 15px auto 0;
-  border: 1px dashed black;
+  margin: 35px auto 0;
+  /* border: 1px dashed black; */
   font-size: 1.3rem;  
   /* font-weight: lighter; */
   width: 40vw;
@@ -161,12 +171,15 @@ input::placeholder {
 } 
 
 .titulos {
+  padding: 8px 0;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 10vw 20vw 10vw;
   font-weight: bolder;
-  font-size: 1.2rem; 
 }
 
+.titulos .espacamento {
+  font-size: 1.2rem;  
+}
 /* 
 #table {	
 	margin: 50px 50px;

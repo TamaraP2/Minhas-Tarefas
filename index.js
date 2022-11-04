@@ -36,22 +36,11 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
         }
 
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${tarefas.length-1}">${textoTarefa}</p>`);
-        
-
-        // document.getElementById(`tarefa-${tarefas.length-1}`).innerHTML = textoTarefa;
-
-        // let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${duracaoString})`;
-
-        // document.getElementById(`tarefa-${tarefas.length-1}`).innerText = textoTarefa;
-          
+         
         document.getElementById("tarefa").value = "";
         document.getElementById("duracao").value = "";
         document.getElementById("tarefa").focus(); 
-
-        // document.querySelector(".console").insertAdjacentHTML("beforeend", `tarefas: ${JSON.stringify(tarefas[tarefas.length-1])} <br>`); 
-
-        document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS PARCIAL = ${JSON.stringify(tarefas)} <br>`);   
-
+    
         dragAndDrop();  
 
     }
@@ -167,9 +156,7 @@ function dragAndDrop() {
         
         
         if (bool === false) {       // impede que o evento seja acionado mais de uma vez seguida
-               
-            document.querySelector(".console").insertAdjacentHTML("beforeend", `ENTROU NO DROP <br>`);  
-
+                 
             posicaoInicialItemMovimentado = document.querySelector(".is-dragging").id.slice(-1); 
 
             for (let i = 0; i < document.querySelectorAll(".tarefa-item").length; i++) {
@@ -179,48 +166,20 @@ function dragAndDrop() {
                 if (posicaoInicialItemMovimentado == idNumber) {
                     posicaoFinalItemMovimentado = i;
                 }
-
-                // document.querySelector(".console").insertAdjacentHTML("beforeend", `idNumber = ${idNumber} <br>`); 
-
-                // if (idNumber != i && posicaoInicialItemMovimentado === -1) {
-                //     posicaoInicialItemMovimentado = i;    
-                // }
  
-                // if (idNumber == posicaoInicialItemMovimentado) {
-                //     posicaoFinalItemMovimentado = i;   
-                // } 
             }
  
 
 
 
             if (posicaoFinalItemMovimentado != posicaoInicialItemMovimentado) {
-
-                document.querySelector(".console").insertAdjacentHTML("beforeend", `ENTROU NO if (posicaoFinalItemMovimentado != posicaoInicialItemMovimentado) <br>`);  
-            // if (posicaoInicialItemMovimentado != -1 && posicaoFinalItemMovimentado != undefined) {
-
-                // document.querySelector(".console").insertAdjacentHTML("beforeend", `posicaoInicialItemMovimentado = ${posicaoInicialItemMovimentado} <br>`); 
-                
-                // document.querySelector(".console").insertAdjacentHTML("beforeend", `posicaoFinalItemMovimentado = ${posicaoFinalItemMovimentado} <br>`); 
-
+ 
                 bool = true;
     
                 let itemMovimentado = tarefas.splice(posicaoInicialItemMovimentado, 1);  
-
-                // document.querySelector(".console").insertAdjacentHTML("beforeend", `itemMovimentado = ${JSON.stringify(itemMovimentado[0])} <br>`); 
-
-                // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS ANTES DE ADD ITEM MODIFICADO = ${JSON.stringify(tarefas)} <br>`); 
-
-                document.querySelector(".console").insertAdjacentHTML("beforeend", `itemMovimentado = ${JSON.stringify(itemMovimentado[0])}<br>`);  
-
+  
                 tarefas.splice(posicaoFinalItemMovimentado, 0, itemMovimentado[0]);
-
-                // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS DEPOIS DE ADD ITEM MODIFICADO = ${JSON.stringify(tarefas)} <br>`); 
-
-                // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS DEPOIS = ${JSON.stringify(tarefas)} <br>`);  
-                // console.log("tarefas após splice: " + JSON.stringify(tarefas));
-                // FALTA RECALCULAR HORARIOS e ATUALIZAR IDS
-                
+ 
                 recalculaHorarios ();
             }
         }
@@ -234,10 +193,7 @@ function recalculaHorarios () {
 
     
     for (let i = 0; i < tarefas.length; i++) {
-  
-        // if (i === posicaoInicialItemMovimentado) {}
- 
-
+    
         i === 0 ? tarefas[i].inicio = horarioInicial : tarefas[i].inicio = tarefas[i-1].final 
 
         tarefas[i].posicao = i; 
@@ -251,10 +207,7 @@ function recalculaHorarios () {
     document.querySelectorAll(".tarefa-item").forEach((cadaTarefa, index) => {
 
         cadaTarefa.id = `tarefa-${index}`;
-          
-        // let horarioInicioTarefa = tarefas[index].inicio;  
-        // let texto = document.getElementById(`tarefa-${index}`).innerText.slice(5); 
-        // let novoTexto1 = horarioInicioTarefa + texto; 
+           
         let duracaoHoras = Number(tarefas[index].duracao.split(":")[0]);
         let duracaoMin = Number(tarefas[index].duracao.split(":")[1]);
 
@@ -266,17 +219,14 @@ function recalculaHorarios () {
 
     })
 
-    document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
-
-    // posicaoInicialItemMovimentado = -1;
+    // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
+ 
 }
 
   
 
 function calculaHorarios2 (posicao) {  
-  
-    // novasTarefas.length === 0 ? inicioTarefa = horarioInicial : inicioTarefa = novasTarefas[novasTarefas.length-1].final;
-
+    
     let inicioTarefaTotal = tarefas[posicao].inicio.split(":");  
     let inicioTarefaHoras = Number(inicioTarefaTotal[0]);
     let inicioTarefaMinutos = Number(inicioTarefaTotal[1]); 
@@ -304,92 +254,4 @@ function calculaHorarios2 (posicao) {
 
     finalTarefa = finalTarefaParcial.join("");   
   
-}
-
- 
-
-
-
-
-
-
-
-
-
-// function novasPosicoesTarefas() {
-  
-//     let listaTarefas = [...document.querySelectorAll(".tarefa-item")];
-
-//     document.querySelector(".console").insertAdjacentHTML("beforeend", `ENTROU novasPosicoesTarefas() <br>`); 
-//     document.querySelector(".console").insertAdjacentHTML("beforeend", `tarefas: ${JSON.stringify(tarefas)} <br>`); 
-    
-//     novasTarefas = [...tarefas];
-    
-//     document.querySelector(".console").insertAdjacentHTML("beforeend", `novas tarefas: ${JSON.stringify(novasTarefas)} <br>`); 
-
-//     novasTarefas.forEach((tarefa, index) => {
-
-//         document.querySelector(".console").insertAdjacentHTML("beforeend", `ENTROU NO FOREACH DE NOVAS TAREFAS <br>`); 
-        
-//         document.querySelector(".console").insertAdjacentHTML("beforeend", `ANTES - novas tarefas[${index}]: ${JSON.stringify(novasTarefas[index])} <br>`); 
-
-//         calculaHorarios2(index);
-//         tarefa.inicio = inicioTarefa; 
-//         tarefa.final = finalTarefa;
-//         document.querySelectorAll(".tarefa-item")[index].id = `tarefa-${index+1}`;
-//         let textoTarefa = `${tarefa.inicio} - ${tarefa.nome} (${duracaoString})`; 
-//         document.getElementById(`tarefa-${index+1}`).innerText = textoTarefa; 
-
-//         document.querySelector(".console").insertAdjacentHTML("beforeend", `DEPOIS - novas tarefas[${index}]: ${JSON.stringify(novasTarefas[index])} <br>`); 
-//     }); 
-    
-//     // for (let i = 0; i < document.querySelectorAll(".tarefa-item").length; i++) {
-//     //     document.querySelectorAll(".tarefa-item").id = `tarefa-${i}`;
-//     // }
- 
-// }
-
-
-
-// new gridjs.Grid({
-//     columns: ["Name", "Email", "Phone Number", "Gender"],
-//     search: false,
-//       sort: false,
-//     height: '200px',
-//       pagination: {
-//       limit: 5
-//     },
-//     data: () => {
-//       return new Promise(resolve => {
-//         setTimeout(() =>
-//           resolve([
-//             ["Dirk", "dborkett0@com.com", "(646) 3432270", "Male"],
-//       ["Maryl", "mchampkins1@dailymail.co.uk", "(980) 3335235", "Female"],
-//       ["Stefan", "sbrawson2@smh.com.au", "(180) 3533257", "Male"],
-//       ["Stephanie", "scouronne4@storify.com", "(904) 5358792", "Female"],
-//       ["Emeline", "esooley5@cyberchimps.com", "(308) 6561908", "Female"],
-//           ["Gavra", "gkrout9@foxnews.com", "(383) 4909639", "Female"],
-//           ["Roxi", "rvillage1@businessweek.com", "(980) 3335235", "Male"],
-//           ["Jamey", "jsheringham0@rakuten.co.jp", "(773) 5233571", "Male"],
-//           ["Maye", "mambrosoni8@prweb.com", "(895) 9997017", "Female"]
-//           ]), 2000);
-//       });
-//     },
-//         pagination: {
-//             enabled: false,
-//     },
-//       className: {
-//       table: 'table-body'
-//     },
-//       language: {
-//       'search': {
-//         'placeholder': '🔍 Search name, email...'
-//       },
-//       'pagination': { 
-//         'previous': '⬅️',
-//         'next': '➡️',
-//         'showing': '👓 Displaying',
-//         'results': () => 'Records'
-//       }
-//     }
-//   }).render(document.getElementById("table"));
+} 
