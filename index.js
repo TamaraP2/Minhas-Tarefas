@@ -153,16 +153,24 @@ function dragAndDrop() {
                 return valorInicial
             }
         }, {offset: Number.NEGATIVE_INFINITY}).element
+
+
+
+
+
     }
 
     
-    document.querySelector(".tarefas").addEventListener("drop", function (event) { 
+    document.querySelector(".tarefas").addEventListener("drop", function  (event) {
+
+        event.preventDefault();   
+        
         
         if (bool === false) {       // impede que o evento seja acionado mais de uma vez seguida
-    
+               
             document.querySelector(".console").insertAdjacentHTML("beforeend", `ENTROU NO DROP <br>`);  
 
-            posicaoInicialItemMovimentado = event.target.id.slice(-1); 
+            posicaoInicialItemMovimentado = document.querySelector(".is-dragging").id.slice(-1); 
 
             for (let i = 0; i < document.querySelectorAll(".tarefa-item").length; i++) {
 
@@ -247,8 +255,12 @@ function recalculaHorarios () {
         // let horarioInicioTarefa = tarefas[index].inicio;  
         // let texto = document.getElementById(`tarefa-${index}`).innerText.slice(5); 
         // let novoTexto1 = horarioInicioTarefa + texto; 
-  
-        let novoTexto = `<span class="espacamento">${tarefas[index].inicio}</span><span class="espacamento">${tarefas[index].nome}</span><span class="espacamento">${tarefas[index].duracao}</span>`;
+        let duracaoHoras = Number(tarefas[index].duracao.split(":")[0]);
+        let duracaoMin = Number(tarefas[index].duracao.split(":")[1]);
+
+        formatacaoDuracao(duracaoHoras, duracaoMin);
+   
+        let novoTexto = `<span class="espacamento">${tarefas[index].inicio}</span><span class="espacamento">${tarefas[index].nome}</span><span class="espacamento">${duracaoString}</span>`;
 
         document.getElementById(`tarefa-${index}`).innerHTML = novoTexto;
 
