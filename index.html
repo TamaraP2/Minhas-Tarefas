@@ -7,49 +7,48 @@
 		<title>Minhas Tarefas</title> 
 		<link rel="icon" href="images/favicon.png">
 		<link rel="stylesheet" href="styles.css">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	</head>
 
 	<body> 
-		
-		<div>
+
+		<header>
 			<h1>Minhas Tarefas</h1> 
 			<p class="descricao">Nesse projeto você digita o nome da tarefa e quanto tempo ela irá durar, e ele calcula os horários pra você!</p>
-		</div>
+		</header>
 
 		<div class="all">
+
 			<div class="input">
 
+				<label for="horario-inicial">1) HORÁRIO QUE DESEJA COMEÇAR A SUA PRIMEIRA TAREFA (HH:MM):</label>
+				<input type="time" id="horario-inicial">    
 				
-				<div class="digite-horario">
-					<p><strong>Digite o horário que deseja começar a fazer suas tarefas</strong></p>
-					
-					<input type="time" placeholder="Horário que deseja começar" id="horario-inicial">   
-				</div>
+				<form>  
+					<label for="tarefa">2) NOME:</label>
+					<input type="text" placeholder="Nome da tarefa" id="tarefa" autocomplete="off">					
 
-				<div class="digite-tarefa-duracao">
-					<p><strong>Digite a tarefa e sua duração (hh:mm)</strong></p>
+					<label for="duracao">DURAÇÃO (HH:MM):</label>
+					<input type="time" id="duracao">   
 
-					<form>
-						<input type="text" placeholder="Nome da tarefa" id="tarefa" autocomplete="off">
-						<input type="time" placeholder="Duração" id="duracao">   
-						<button class="button"><strong>Enviar</strong></button>
-					</form>
-				</div>
+					<button class="btn-enviar">ENVIAR</button>
+				</form> 
 				
 				<div class="dica"></div>
 			</div>
 				
 			<div class="output">
-				<p><strong>Horários das suas tarefas:</strong></p>
+				<p>Horários das suas tarefas:</p>
 				<div class="tarefas">
-					<!-- <div class="dropzones">&nbsp;</div> -->
-				</div>  
+					<!-- <div id="table"></div></div>   -->
 			</div>
+
 		</div>
 		
+		<div class="console"></div>
+		
 		<!-- <p class="tamara">Desenvolvido por <span class="tamarap">Tamara P</span></p> -->
-
+		<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
 		<script src="index.js"></script>
 	</body>
 	
