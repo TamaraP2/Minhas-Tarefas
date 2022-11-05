@@ -140,11 +140,16 @@ p:last-child:not(.descricao) {
   border-bottom: 1px dashed black;
 }
 
-/* 
 
-.tarefa-item::first-line {
-  border-top: 1px dashed black;
-} */
+
+.tarefa-item:hover::before {
+  content: url('images/delete.png');  
+  width: 34px; 
+  height: 34px;
+  position: absolute;
+  left: 29.8vw;  
+  /* border-top: 1px dashed black; */
+}
 
 .digite-horario,
 .descricao,
