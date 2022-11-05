@@ -19,6 +19,9 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
     
     if (document.getElementById("horario-inicial").value !== "") {
         horarioInicial = document.getElementById("horario-inicial").value; 
+        if (tarefas.length != 0) {
+            recalculaHorarios();
+        }
     }
     
     if (document.getElementById("tarefa").value !== "" && document.getElementById("duracao").value !== "") { 
@@ -142,11 +145,7 @@ function dragAndDrop() {
                 return valorInicial
             }
         }, {offset: Number.NEGATIVE_INFINITY}).element
-
-
-
-
-
+ 
     }
 
     
