@@ -10,6 +10,7 @@ let inicioTarefa;
 let finalTarefa;
 let duracaoString;
 let bool = false; 
+let bool2 = false; 
 let posicaoInicialItemMovimentado;
 let posicaoFinalItemMovimentado;  
 let enderecoLixeira = "images/delete_transparente.png"; 
@@ -35,8 +36,9 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
         
         let textoTarefa = `<img class="lixeiras lixeira-${tarefas.length-1}" src=${enderecoLixeira}><span class="espacamento">${tarefa.inicio}</span><span class="espacamento">${tarefa.nome}</span><span class="espacamento">${duracaoString}</span>`;
 
-        if (tarefas.length === 1) {
+        if (tarefas.length === 1 && bool2 === false) {
             document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);
+            bool2 = true;
         }
 
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${tarefas.length-1}">${textoTarefa}</p>`);
@@ -190,6 +192,8 @@ function dragAndDrop() {
                 });
   
                 atualizaHorarios ();
+                
+                deletar();
             }
 
 
@@ -273,6 +277,11 @@ function calculaHorarios2 (posicao) {
 
 function deletar() {  
   
+    tarefas.forEach((tarefa, index) => {
+        document.querySelector(`.lixeira-${index}`).src = "images/delete_transparente.png";
+        enderecoLixeira = "images/delete_transparente.png";  
+    });
+
     document.querySelectorAll(".tarefa-item").forEach(tarefa => { 
 
         tarefa.addEventListener('mouseenter', function(event) {
@@ -286,6 +295,25 @@ function deletar() {
         });
     });
 
+    document.querySelectorAll(".lixeiras").forEach(lixeira => { 
+
+        lixeira.addEventListener('click', function(event) { 
+
+            document.getElementById(`tarefa-${event.target.className.slice(-1)}`).remove();
+            tarefas.splice(event.target.className.slice(-1), 1);
+            console.log(`tarefa-${event.target.className.slice(-1)}`);
+
+            atualizaHorarios ();
+            
+            deletar();
+
+            // tarefas.forEach((tarefa, index) => {
+            //     document.querySelector(`.lixeira-${index}`).src = "images/delete_transparente.png";
+            //     enderecoLixeira = "images/delete_transparente.png";  
+            // });
+            
+        });
+    });
 } 
 
 
