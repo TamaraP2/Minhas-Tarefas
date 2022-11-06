@@ -131,7 +131,7 @@ input::placeholder {
   cursor: move;
   display: block;
   display: grid;
-  grid-template-columns: 10vw 20vw 10vw;
+  grid-template-columns: 2vw 10vw 20vw 10vw;
   justify-items: center; 
   border-top: 1px dashed black;
 } 
@@ -141,14 +141,19 @@ p:last-child:not(.descricao) {
 }
 
 
-
+/* 
 .tarefa-item:hover::before {
   content: url('images/delete.png');  
   width: 34px; 
   height: 34px;
   position: absolute;
   left: 29.8vw;  
+  cursor: pointer;
   /* border-top: 1px dashed black; */
+/*} */
+
+.lixeiras {  
+  cursor: pointer;
 }
 
 .digite-horario,
@@ -178,7 +183,7 @@ p:last-child:not(.descricao) {
 .titulos {
   padding: 8px 0;
   display: grid;
-  grid-template-columns: 10vw 20vw 10vw;
+  grid-template-columns: 2vw 10vw 20vw 10vw;
   font-weight: bolder;
 }
 
