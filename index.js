@@ -12,8 +12,7 @@ let duracaoString;
 let bool = false; 
 let posicaoInicialItemMovimentado;
 let posicaoFinalItemMovimentado;  
-let enderecoLixeira = "images/delete_transparente.png";
-// let enderecoLixeiraTransparente = "images/delete_transparente.png";
+let enderecoLixeira = "images/delete_transparente.png"; 
 
 document.querySelector(".btn-enviar").addEventListener("click", function(e) {
 
@@ -184,20 +183,12 @@ function dragAndDrop() {
                 let itemMovimentado = tarefas.splice(posicaoInicialItemMovimentado, 1);  
   
                 tarefas.splice(posicaoFinalItemMovimentado, 0, itemMovimentado[0]);
-  
-                // document.querySelectorAll(".tarefa-item").forEach(tarefa => {
-                    
-                //     tarefa.removeEventListener('mouseenter', mouseEnter);
-                //     tarefa.removeEventListener('mouseleave', mouseLeave);
-                // });
-
+    
                 tarefas.forEach((tarefa, index) => {
                     document.querySelector(`.lixeira-${index}`).src = "images/delete_transparente.png";
                     enderecoLixeira = "images/delete_transparente.png";  
                 });
-
-                deletar();
-
+  
                 atualizaHorarios ();
             }
 
@@ -225,9 +216,7 @@ function atualizaHorarios () {
     }
 
     document.querySelectorAll(".tarefa-item").forEach((cadaTarefa, index) => {
-        
-        // deletar();
-
+          
         cadaTarefa.id = `tarefa-${index}`;
            
         let duracaoHoras = Number(tarefas[index].duracao.split(":")[0]);
@@ -279,62 +268,24 @@ function calculaHorarios2 (posicao) {
   
 } 
 
-  
-// function deletar() {
-  
-//     document.querySelectorAll(".tarefa-item").forEach((tarefa, index) => {
-
-//         tarefa.addEventListener('mouseenter', function () {    
-//             document.querySelector(`.lixeira-${index}`).src = "images/delete.png";
-//             enderecoLixeira = "images/delete.png";  
-//         });
- 
-//         tarefa.addEventListener('mouseleave', function () {    
-//             document.querySelector(`.lixeira-${index}`).src = "images/delete_transparente.png";
-//             enderecoLixeira = "images/delete_transparente.png";  
-//         });
-
-//     }); 
-// }
    
-let cont;
-
-function deletar() { 
-
-    // cont = id;  
-    // document.querySelectorAll(".tarefa-item")[id].addEventListener('mouseenter', mouseEnter);    
-    // document.querySelectorAll(".tarefa-item")[id].addEventListener('mouseleave', mouseLeave);       
-    cont = 0;
     
-    document.querySelectorAll(".tarefa-item").forEach(tarefa => {
-                    
-        tarefa.removeEventListener('mouseenter', mouseEnter);
-        tarefa.removeEventListener('mouseleave', mouseLeave);
+
+function deletar() {  
+  
+    document.querySelectorAll(".tarefa-item").forEach(tarefa => { 
+
+        tarefa.addEventListener('mouseenter', function(event) {
+            document.querySelector(`.lixeira-${event.target.id.slice(-1)}`).src = "images/delete.png";
+            enderecoLixeira = "images/delete.png"; 
+        });
+
+        tarefa.addEventListener('mouseleave', function(event) {
+            document.querySelector(`.lixeira-${event.target.id.slice(-1)}`).src = "images/delete_transparente.png";
+            enderecoLixeira = "images/delete_transparente.png";  
+        });
     });
 
-    document.querySelectorAll(".tarefa-item").forEach((tarefa, index) => {
-        cont = index;
-        // document.querySelector(".console").insertAdjacentHTML("beforeend", `cont = ${cont} <br>`);   
-        tarefa.addEventListener('mouseenter', mouseEnter);
-        tarefa.addEventListener('mouseleave', mouseLeave);
-    });
-
-}
-
-function mouseEnter(event) { 
-    // console.log(event);
-    // document.querySelector(".console").insertAdjacentHTML("beforeend", `mouse enter event = ${JSON.stringify(event)} <br>`);   
-    // document.querySelector(".console").insertAdjacentHTML("beforeend", `mouseEnter cont = ${cont} <br>`);   
-    document.querySelector(`.lixeira-${event.target.id.slice(-1)}`).src = "images/delete.png";
-    enderecoLixeira = "images/delete.png"; 
-}
-
-function mouseLeave(event) {
-//     console.log(event);
-//     document.querySelector(".console").insertAdjacentHTML("beforeend", `mouse enter event = ${JSON.stringify(event)} <br>`);   
-//     document.querySelector(".console").insertAdjacentHTML("beforeend", `mouseLeave cont = ${cont} <br>`);   
-    document.querySelector(`.lixeira-${event.target.id.slice(-1)}`).src = "images/delete_transparente.png";
-    enderecoLixeira = "images/delete_transparente.png";  
-}
+} 
 
 
