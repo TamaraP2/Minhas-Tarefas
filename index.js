@@ -9,15 +9,12 @@ let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
 let duracaoString;
-let bool = false; 
-let bool2 = false; 
+let bool = false;  
 let posicaoInicialItemMovimentado;
 let posicaoFinalItemMovimentado;  
 let enderecoLixeira = "images/delete_transparente.png"; 
 
-document.querySelector(".btn-enviar").addEventListener("click", function(e) {
-
-    e.preventDefault();
+function inicio() {
     
     if (document.getElementById("horario-inicial").value !== "") {
         horarioInicial = document.getElementById("horario-inicial").value; 
@@ -36,9 +33,8 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
         
         let textoTarefa = `<img class="lixeiras lixeira-${tarefas.length-1}" src=${enderecoLixeira}><span class="espacamento">${tarefa.inicio}</span><span class="espacamento">${tarefa.nome}</span><span class="espacamento">${duracaoString}</span>`;
 
-        if (tarefas.length === 1 && bool2 === false) {
-            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);
-            bool2 = true;
+        if (tarefas.length === 1 && !document.querySelector(".titulos")) {
+            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);          
         }
 
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${tarefas.length-1}">${textoTarefa}</p>`);
@@ -51,8 +47,15 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
 
         dragAndDrop();  
 
-
+        window.localStorage.clear();
+        window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
+        window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
     }
+}
+
+document.querySelector(".btn-enviar").addEventListener("click", function(e) { 
+    e.preventDefault();
+    inicio();
 });
 
 
@@ -191,9 +194,15 @@ function dragAndDrop() {
                     enderecoLixeira = "images/delete_transparente.png";  
                 });
   
+
+                window.localStorage.clear();
+                window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
+                window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+
                 atualizaHorarios ();
                 
                 deletar();
+                 
             }
 
 
@@ -213,11 +222,19 @@ function atualizaHorarios () {
 
         tarefas[i].posicao = i; 
         
+        window.localStorage.clear();
+        window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
+        window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+
         calculaHorarios2 (i);
         
         tarefas[i].final = finalTarefa;
  
     }
+
+    window.localStorage.clear();
+    window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
+    window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
 
     document.querySelectorAll(".tarefa-item").forEach((cadaTarefa, index) => {
           
@@ -233,7 +250,7 @@ function atualizaHorarios () {
         document.getElementById(`tarefa-${index}`).innerHTML = novoTexto;
         
 
-    })
+    });
 
     // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
  
@@ -298,10 +315,13 @@ function deletar() {
     document.querySelectorAll(".lixeiras").forEach(lixeira => { 
 
         lixeira.addEventListener('click', function(event) { 
-
+                 
             document.getElementById(`tarefa-${event.target.className.slice(-1)}`).remove();
-            tarefas.splice(event.target.className.slice(-1), 1);
-            console.log(`tarefa-${event.target.className.slice(-1)}`);
+            tarefas.splice(event.target.className.slice(-1), 1); 
+
+            window.localStorage.clear();
+            window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
+            window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
 
             atualizaHorarios ();
             
@@ -311,9 +331,73 @@ function deletar() {
             //     document.querySelector(`.lixeira-${index}`).src = "images/delete_transparente.png";
             //     enderecoLixeira = "images/delete_transparente.png";  
             // });
-            
         });
     });
+ 
+    window.localStorage.clear();
+    window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
+    window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+    
+
 } 
 
+window.onload = function() { 
 
+    if (!document.querySelector(".tarefas").hasChildNodes() && localStorage.getItem('tarefasLS') != null) { 
+        
+        let tarefasLS = JSON.parse(localStorage.getItem('tarefasLS'));
+        horarioInicial = JSON.parse(localStorage.getItem("horarioInicial"));
+
+        if (!document.querySelector(".titulos")) {
+            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);
+        }
+
+        for (let i = 0; i < tarefasLS.length; i++) { 
+            tarefas[i] = tarefasLS[i]; 
+
+            let novoTexto = `<img class="lixeiras lixeira-${i}" src=${enderecoLixeira}><span class="espacamento">${tarefas[i].inicio}</span><span class="espacamento">${tarefas[i].nome}</span><span class="espacamento">${tarefas[i].duracao}</span>`;
+  
+            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${i}">${novoTexto}</p>`);
+        }
+         
+        dragAndDrop();  
+        deletar();
+
+    }
+
+
+    // if (!document.querySelector(".tarefas").hasChildNodes()) { 
+
+    //     let tarefasLS = JSON.parse(localStorage.getItem('tarefasLS'));
+
+    //     console.log("tarefasLS = " + JSON.stringify(tarefasLS)); 
+
+    //     console.log("tarefasLS[0].duracao = " + tarefasLS[0].duracao); 
+    //     console.log("typeof tarefasLS[0].duracao = " + typeof tarefasLS[0].duracao); 
+
+    //     for (let i = 0; i < tarefasLS.length; i++) {
+  
+    //         tarefasLS.id = `tarefa-${i}`;
+               
+    //         let duracaoHoras = tarefasLS[i].duracao.split(":")[0];
+    //         let duracaoMin = tarefasLS[i].duracao.split(":")[1];
+    
+    //         formatacaoDuracao(duracaoHoras, duracaoMin);
+       
+    //         let novoTexto = `<img class="lixeiras lixeira-${i}" src=${enderecoLixeira}><span class="espacamento">${tarefasLS[i].inicio}</span><span class="espacamento">${tarefasLS[i].nome}</span><span class="espacamento">${duracaoString}</span>`;
+    
+    //         // document.getElementById(`tarefa-${i}`).innerHTML = novoTexto;
+
+    //         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${i}">${novoTexto}</p>`);
+             
+    //         tarefas.push(tarefasLS[i]);  
+    //         console.log(`tarefasLS[${i}] = ` + JSON.stringify(tarefasLS[i]));
+    //     }
+ 
+    //     console.log("tarefas = " + JSON.stringify(tarefasLS)); 
+
+    //     atualizaHorarios();
+    //     dragAndDrop();  
+    //     deletar();
+    // }
+}
