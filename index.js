@@ -355,14 +355,43 @@ window.onload = function() {
         for (let i = 0; i < tarefasLS.length; i++) { 
             tarefas[i] = tarefasLS[i]; 
 
-            let novoTexto = `<img class="lixeiras lixeira-${i}" src=${enderecoLixeira}><span class="espacamento">${tarefas[i].inicio}</span><span class="espacamento">${tarefas[i].nome}</span><span class="espacamento">${tarefas[i].duracao}</span>`;
+            let duracaoHoras = Number(tarefas[i].duracao.split(":")[0]);
+            let duracaoMinutos = Number(tarefas[i].duracao.split(":")[1]);
+
+            formatacaoDuracao(duracaoHoras, duracaoMinutos);
+
+            let novoTexto = `<img class="lixeiras lixeira-${i}" src=${enderecoLixeira}><span class="espacamento">${tarefas[i].inicio}</span><span class="espacamento">${tarefas[i].nome}</span><span class="espacamento">${duracaoString}</span>`;
   
             document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${i}">${novoTexto}</p>`);
         }
-         
-        dragAndDrop();  
-        deletar();
+        
+        let alarmeTocou = false;
+        setInterval(hora, 1000);
 
+        function hora () { 
+
+            let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
+            console.log(horaAtual); 
+            console.log(alarmeTocou);
+            tarefas.forEach(tarefa => {
+                
+                if (tarefa.inicio === horaAtual && alarmeTocou === false) {
+
+                    let alarme = new Audio('sounds/alarme.mp3');
+                    alarme.volume = 0.2;
+                    alarme.play(); 
+                    alarmeTocou = true;     
+                    setTimeout(() => {
+                        alarmeTocou = false;
+                    }, 60000);   
+                }
+            });
+            
+        }
+        
+       dragAndDrop();  
+
+       deletar();
     }
 
 
