@@ -33,11 +33,11 @@ function inicio() {
         
         let textoTarefa = `<img class="lixeiras lixeira-${tarefas.length-1}" src=${enderecoLixeira}><span class="espacamento">${tarefa.inicio}</span><span class="espacamento">${tarefa.nome}</span><span class="espacamento">${duracaoString}</span>`;
 
-        if (tarefas.length === 1 && !document.querySelector(".titulos")) {
-            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);          
-        }
+        // if (tarefas.length === 1 && !document.querySelector(".titulos")) {
+        //     document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);          
+        // }
 
-        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${tarefas.length-1}">${textoTarefa}</p>`);
+        document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item animacao" draggable="true" id="tarefa-${tarefas.length-1}">${textoTarefa}</p>`);
          
         document.getElementById("tarefa").value = "";
         document.getElementById("duracao").value = "";
@@ -47,9 +47,8 @@ function inicio() {
 
         dragAndDrop();  
 
-        window.localStorage.clear();
-        window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
-        window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+        salvamentoLocal();
+        
     }
 }
 
@@ -110,14 +109,18 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
     } 
 }
   
+            // for (let i = 0; i < tarefas.length; i++) {
+            //     document.querySelectorAll(".animacao")[i].classList.remove("animacao");
+            // }
 
 function dragAndDrop() {
   
     document.querySelectorAll(".tarefa-item").forEach(tarefa => {
 
-        tarefa.addEventListener('dragstart', function () {  
+        tarefa.addEventListener('dragstart', function () {   
             bool = false;   
             this.classList.add("is-dragging");
+            this.classList.remove("animacao");
         });
  
         tarefa.addEventListener('dragend', function () {     
@@ -192,16 +195,25 @@ function dragAndDrop() {
                 tarefas.forEach((tarefa, index) => {
                     document.querySelector(`.lixeira-${index}`).src = "images/delete_transparente.png";
                     enderecoLixeira = "images/delete_transparente.png";  
+
+                    let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
+            
+                    if (tarefa.inicio === horaAtual) {
+            
+                        if (document.querySelector(".tarefa-atual")) {
+                            document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
+                        }
+            
+                        document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
+                    }
                 });
   
-
-                window.localStorage.clear();
-                window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
-                window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+                salvamentoLocal();
 
                 atualizaHorarios ();
                 
                 deletar();
+
                  
             }
 
@@ -222,9 +234,7 @@ function atualizaHorarios () {
 
         tarefas[i].posicao = i; 
         
-        window.localStorage.clear();
-        window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
-        window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+        salvamentoLocal();
 
         calculaHorarios2 (i);
         
@@ -232,9 +242,7 @@ function atualizaHorarios () {
  
     }
 
-    window.localStorage.clear();
-    window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
-    window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+    salvamentoLocal();
 
     document.querySelectorAll(".tarefa-item").forEach((cadaTarefa, index) => {
           
@@ -249,7 +257,17 @@ function atualizaHorarios () {
 
         document.getElementById(`tarefa-${index}`).innerHTML = novoTexto;
         
+        let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
 
+
+        if (cadaTarefa.inicio === horaAtual) {
+
+            if (document.querySelector(".tarefa-atual")) {
+                document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
+            }
+
+            document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
+        }
     });
 
     // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
@@ -319,9 +337,7 @@ function deletar() {
             document.getElementById(`tarefa-${event.target.className.slice(-1)}`).remove();
             tarefas.splice(event.target.className.slice(-1), 1); 
 
-            window.localStorage.clear();
-            window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
-            window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
+            salvamentoLocal();
 
             atualizaHorarios ();
             
@@ -334,23 +350,22 @@ function deletar() {
         });
     });
  
-    window.localStorage.clear();
-    window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
-    window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
-    
-
+    salvamentoLocal();
+     
 } 
 
 window.onload = function() { 
 
-    if (!document.querySelector(".tarefas").hasChildNodes() && localStorage.getItem('tarefasLS') != null) { 
-        
+    console.log(document.querySelector(".tarefas").childNodes.length);  
+
+    if (document.querySelector(".tarefas").childNodes.length === 3 && localStorage.getItem('tarefasLS') != null) { 
+        console.log("entrou no if");  
         let tarefasLS = JSON.parse(localStorage.getItem('tarefasLS'));
         horarioInicial = JSON.parse(localStorage.getItem("horarioInicial"));
 
-        if (!document.querySelector(".titulos")) {
-            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);
-        }
+        // if (!document.querySelector(".titulos")) {
+        //     document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);
+        // }
 
         for (let i = 0; i < tarefasLS.length; i++) { 
             tarefas[i] = tarefasLS[i]; 
@@ -362,38 +377,49 @@ window.onload = function() {
 
             let novoTexto = `<img class="lixeiras lixeira-${i}" src=${enderecoLixeira}><span class="espacamento">${tarefas[i].inicio}</span><span class="espacamento">${tarefas[i].nome}</span><span class="espacamento">${duracaoString}</span>`;
   
-            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item" draggable="true" id="tarefa-${i}">${novoTexto}</p>`);
+            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item animacao" draggable="true" id="tarefa-${i}">${novoTexto}</p>`);
         }
         
-        let alarmeTocou = false;
-        setInterval(hora, 1000);
-
-        function hora () { 
-
-            let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
-            console.log(horaAtual); 
-            console.log(alarmeTocou);
-            tarefas.forEach(tarefa => {
-                
-                if (tarefa.inicio === horaAtual && alarmeTocou === false) {
-
-                    let alarme = new Audio('sounds/alarme.mp3');
-                    alarme.volume = 0.2;
-                    alarme.play(); 
-                    alarmeTocou = true;     
-                    setTimeout(() => {
-                        alarmeTocou = false;
-                    }, 60000);   
-                }
-            });
-            
-        }
         
        dragAndDrop();  
 
        deletar();
     }
 
+
+
+
+    let alarmeTocou = false;
+    setInterval(hora, 1000);
+
+    function hora () { 
+
+        let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
+        console.log(horaAtual); 
+        console.log(alarmeTocou);
+        tarefas.forEach((tarefa, index) => {
+            
+            if (tarefa.inicio === horaAtual && alarmeTocou === false) {
+
+                if (document.querySelector(".tarefa-atual")) {
+                    document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
+                }
+
+                document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
+
+                let alarme = new Audio('sounds/alarme.mp3');
+                alarme.volume = 0.05;
+                alarme.play(); 
+                alarmeTocou = true;     
+
+                setTimeout(() => {
+                // document.getElementById(`tarefa-${index}`).classList.remove("tarefa-atual");
+                    alarmeTocou = false;
+                }, 60000);   
+            }
+        });
+        
+    }
 
     // if (!document.querySelector(".tarefas").hasChildNodes()) { 
 
@@ -429,4 +455,13 @@ window.onload = function() {
     //     dragAndDrop();  
     //     deletar();
     // }
+}
+
+
+
+function salvamentoLocal () {
+        
+    window.localStorage.clear();
+    window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
+    window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
 }

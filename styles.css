@@ -67,15 +67,6 @@ form {
   justify-content: center;
 }
 
-.btn-enviar {
-  border: 0.1rem inset #8f8d8d; 
-  text-align: center;   
-  height: 30px; 
-  background-color: rgba(255, 255, 255, 0.651);
-  padding: 5px; 
-  display: inline-block;
-  border: 1px solid black;
-}
  
  
 p:not(.tarefa-item) {
@@ -91,7 +82,7 @@ label {
 }
 
 input {
-  /* padding: 8px 10px; */
+  padding: 8px 10px;
   background-color: rgba(255, 255, 255, 0.219);
   /* display: block; */
   /* margin: 0 auto; */
@@ -103,17 +94,30 @@ input {
   border: 1px solid black;
 } 
 
-.dica, 
-.btn-enviar, 
+.dica,  
 input::placeholder {
   color: black;
   font-size: 1rem;  
 }
  
-.btn-enviar:hover {
+.btn-enviar { 
+  display: inline-block;
+  border: 1px solid black; 
+  height: 30px;
   background-color: rgba(245,130,145,255);
   color: white;
   cursor: pointer;
+  margin-left: 20px;
+  font-size: 1rem;  
+  font-weight: bolder;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  padding: 0 5px;
+}
+
+.btn-enviar:hover {
+  background-color: rgb(247, 90, 111);
+  transition: 0.2s;
 }
 
 .tamara {
@@ -126,6 +130,8 @@ input::placeholder {
 }
 
 .tarefa-item {
+  position: relative;
+  bottom: 20px;
   /* margin-left: 20px; */
   font-size: 1.3rem; 
   cursor: move;
@@ -134,11 +140,30 @@ input::placeholder {
   grid-template-columns: 2vw 10vw 20vw 10vw;
   justify-items: center; 
   border-top: 1px dashed black;
-} 
- 
+  border-bottom: 1px dashed black;
+  margin-top: -1px;
+  /* transition: 0.5s;
+  transform: translateY(-150px);  */
+  /* animation: appear 0.5s; */
+}
+
+.animacao {
+  animation: appear 1s;
+}
+
+@keyframes appear {
+  from { 
+    transform: translateY(150px);
+  }
+}
+/* 
+p.output:last-child{
+  border-bottom: 1px dashed black;
+} */
+/* 
 p:last-child:not(.descricao) {
   border-bottom: 1px dashed black;
-}
+} */
 
 
 /* 
@@ -167,7 +192,7 @@ p:last-child:not(.descricao) {
 }
  
 .output {
-  padding-top: 50px;
+  /* padding-top: 50px; */
 }
  
 
@@ -181,7 +206,7 @@ p:last-child:not(.descricao) {
 } 
 
 .titulos {
-  padding: 8px 0;
+  padding: 20px 0;
   display: grid;
   grid-template-columns: 2vw 10vw 20vw 10vw;
   font-weight: bolder;
@@ -190,6 +215,11 @@ p:last-child:not(.descricao) {
 .titulos .espacamento {
   font-size: 1.2rem;  
 }
+
+.tarefa-atual {
+  background-color: rgb(251,186,194);
+}
+
 /* 
 #table {	
 	margin: 50px 50px;
