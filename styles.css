@@ -1,6 +1,6 @@
 
 /* ====================================================== */
-/* ===================== CONTAINERS ===================== */
+/* ======================== GERAL ======================= */
 /* ====================================================== */
 
 * {
@@ -11,32 +11,57 @@
   text-align: center; 
 }
 
-body { 
-  background-size: auto; 
-  background-image: url(images/background\.jpg);
-  background-size: cover;  
-  max-height: 96vh;
-  display: flex;
-  flex-direction: column;
+body {  
+  background-color: rgba(254,235,232,255);
+  background-image: url(images/background2\.jpg);
+  background-size: cover;   
+  background-repeat: no-repeat;  
+  max-height: 96vh; 
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ====================================================== */
+/* ====================== HEADER ======================== */
+/* ====================================================== */
+
+
 h1 {
-  margin: 40px 0; 
+  margin: 15vh 0 40px; 
 } 
   
+p:not(.tarefa-item) {
+  margin: 10px 0;
+  font-size: 1.4rem;   
+} 
+
+.descricao { 
+  font-weight: bolder; 
+}
+
+/* ====================================================== */
+/* ======================= INPUT ======================== */
+/* ====================================================== */
+
+
 form {
   padding-top: 20px;
   display:flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
- 
-p:not(.tarefa-item) {
-  margin: 10px 0;
-  font-size: 1.4rem;  
-  font-weight: bolder; 
-} 
+   
+.form-nome-duracao {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 
 label {
   margin: 10px 10px;
@@ -45,9 +70,8 @@ label {
 }
 
 input {
-  padding: 8px 10px;
-  background-color: rgba(255, 255, 255, 0.219); 
-  margin-right: 10px;
+  padding: 8px 8px;
+  background-color: rgba(255, 255, 255, 0.219);  
   height: 30px; 
   font-size: 1rem; 
   border: 1px solid black;
@@ -65,7 +89,7 @@ input::placeholder {
   background-color: rgba(245,130,145,255); 
   color: white;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 15px;
   font-size: 1rem;  
   font-weight: bolder;
   letter-spacing: 0.2rem; 
@@ -78,23 +102,46 @@ input::placeholder {
   background-color: rgb(247, 90, 111);
   transition: 0.3s ease-in-out;
 }
-  
-.tarefa-item {
-  position: relative;
-  bottom: 20px; 
-  font-size: 1.3rem; 
-  cursor: move;
-  display: block;
+   
+
+
+/* ====================================================== */
+/* ====================== OUTPUT ======================== */
+/* ====================================================== */
+
+ 
+.tarefas { 
+  margin: 50px auto 0; 
+  font-size: 1.3rem;   
+  width: 40vw;
+  min-height: 300px;
+  padding-bottom: 40px;
+} 
+
+.titulos {
+  padding: 10px 0;
   display: grid;
-  grid-template-columns: 2vw 10vw 20vw 10vw;   
-  justify-items: center; 
+  grid-template-columns: 2vw 10vw 20vw 10vw; 
+  font-weight: bolder;
+  justify-content: center;
+}
+
+.titulos .espacamento {
+  font-size: 1.2rem;  
+}
+  
+.tarefa-item { 
+  font-size: 1.3rem; 
+  cursor: move; 
+  display: grid;
+  grid-template-columns: 2vw 10vw 20vw 10vw; 
   border-top: 1px dashed black;
   border-bottom: 1px dashed black;
   margin-top: -1px;
   justify-content: center; 
 }
 
-.animacao {
+.animacao-sobe {
   animation: sobe 1s;
 }
 
@@ -110,48 +157,15 @@ input::placeholder {
   z-index: 10;
 }
  
-.descricao { 
-  font-weight: bolder; 
-}
-
-.is-dragging {
+.tarefa-selecionada {
   color:  rgb(247, 90, 111);
   font-weight: bolder; 
 }
-   
-.tarefas { 
-  margin: 50px auto 0; 
-  font-size: 1.3rem;   
-  width: 40vw;
-  min-height: 300px;
-} 
-
-.titulos {
-  padding: 20px 0;
-  display: grid;
-  grid-template-columns: 2vw 10vw 20vw 10vw; 
-  font-weight: bolder;
-  justify-content: center;
-}
-
-.titulos .espacamento {
-  font-size: 1.2rem;  
-}
-
+    
 .tarefa-atual { 
   background-color: rgba(245,130,145);
 }
- 
-.form-horario {
-  margin-bottom: 20px;
-}
-
-.form-nome-duracao {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
+  
 
 /* ====================================================== */
 /* ==================== MEDIA QUERIES =================== */
@@ -164,19 +178,41 @@ input::placeholder {
     width: 80vw;
   }
 
-  .titulos { 
+  .titulos,  
+  .tarefa-item  { 
     grid-template-columns: 2vw 15vw 35vw 15vw; 
   }
-  
-  .tarefa-item { 
-    grid-template-columns: 2vw 15vw 35vw 15vw; 
-  }
-
+    
   .lixeiras {  
     padding-left: 0;
     padding-right: 30px;
     cursor: pointer;
   }
+
+  #horario-inicial {
+    width: 60vw;
+  }
+
+  #nome-tarefa {
+    width: 40vw;
+  }
+
+  #duracao {
+    width: 20vw;
+  }
+  
+  .form-nome-duracao { 
+    flex-direction: column;
+    gap: 15px; 
+  }
+
+  
+  /* body {  
+    background-image: url(images/background\.jpg);
+    background-size: cover;  
+    max-height: 96vh; 
+  } */
+
 }
  
 
@@ -186,4 +222,42 @@ input::placeholder {
     flex-direction: column;
     gap: 15px; 
   }
+  
+  .nowrap {
+    white-space: initial;
+  }
+  
+  .titulos, .tarefa-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tarefas {
+    display: flex;
+    flex-direction: column;
+  }
+
+ 
+
+  .titulos, .tarefa-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tarefas {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tarefa-item { 
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+  }
+
+
+  /* .tarefa-item  { 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr 1fr 1fr 1fr; 
+  } */
 }

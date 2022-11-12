@@ -11,10 +11,10 @@
 	</head>
 
 	<body>  
-		<!-- <img src="images/delete transparente.png"> -->
+		
 		<header>
 			<h1>Minhas Tarefas</h1> 
-			<p class="descricao">Digite o nome das tarefas e suas durações, que calculamos os horários pra você!</p>
+			<p class="descricao">Digite o nome das tarefas e suas durações, <span class="nowrap">que calculamos os horários pra você!</span></p>
 		</header>
 
 		<div class="all">
@@ -23,30 +23,29 @@
 				
 				<form>  
 					<div class="form-horario">
-						<label for="horario-inicial">1) HORÁRIO QUE DESEJA COMEÇAR A SUA PRIMEIRA TAREFA (HH:MM):</label>
+						<label for="horario-inicial">1) HORÁRIO QUE DESEJA COMEÇAR <span class="nowrap">A SUA PRIMEIRA TAREFA (HH:MM):</span></label>
 						<input type="time" id="horario-inicial">    
 					</div>
 					
 					<div class="form-nome-duracao">
 						<div class="form-nome">
-							<label for="tarefa">2) NOME:</label>
-							<input type="text" placeholder="Nome da tarefa" id="tarefa" autocomplete="off">					
+							<label for="nome-tarefa">2) NOME:</label>
+							<input type="text" placeholder="Nome da tarefa" id="nome-tarefa" autocomplete="off">					
 						</div>
 
 						<div class="form-duracao">
-							<label for="duracao">DURAÇÃO (HH:MM):</label>
+							<label for="duracao">3) DURAÇÃO (HH:MM):</label>
 							<input type="time" id="duracao">   
 						</div>
+
 						<button class="btn-enviar">ENVIAR</button>
 					</div>
 					
 				</form> 
-				
-				<!-- <div class="dica"></div> -->
+				 
 			</div>
 				
-			<div class="output">
-				<!-- <p>Horários das suas tarefas:</p> -->
+			<div class="output"> 
 				<div class="tarefas">
 					<p class="titulos">
 						<span class="espacamento"></span>
@@ -58,11 +57,7 @@
 			</div>
 
 		</div>
-		
-		<div class="console"></div>
-		
-		<!-- <p class="tamara">Desenvolvido por <span class="tamarap">Tamara P</span></p> -->
-		<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+		  
 		<script src="index.js"></script>
 	</body>
 	
