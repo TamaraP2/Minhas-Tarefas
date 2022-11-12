@@ -117,7 +117,8 @@ function dragAndDrop() {
   
     document.querySelectorAll(".tarefa-item").forEach(tarefa => {
 
-        tarefa.addEventListener('dragstart', function () {   
+        tarefa.addEventListener('dragstart', function (event) {   
+            event.dataTransfer.setDragImage(event.target, window.outerWidth, window.outerHeight); 
             bool = false;   
             this.classList.add("is-dragging");
             this.classList.remove("animacao");
