@@ -13,7 +13,7 @@
 
 body {  
   background-color: rgba(254,235,232,255);
-  background-image: url(images/background2\.jpg);
+  background-image: url(images/background\.jpg);
   background-size: cover;   
   background-repeat: no-repeat;  
   max-height: 96vh; 
@@ -174,8 +174,12 @@ input::placeholder {
 
 @media (max-width: 1000px) {
  
-  .tarefas { 
+  .all {
     width: 80vw;
+  }
+  
+  .tarefas { 
+    width: 100%;
   }
 
   .titulos,  
@@ -207,11 +211,14 @@ input::placeholder {
   }
 
   
-  /* body {  
-    background-image: url(images/background\.jpg);
-    background-size: cover;  
-    max-height: 96vh; 
-  } */
+h1 {
+  margin: 6vh 0 40px; 
+} 
+
+  body {  
+    background-image: url(images/background2.jpg);
+    background-size: contain;   
+  } 
 
 }
  

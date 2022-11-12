@@ -9,7 +9,7 @@ let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
 let duracaoString;
-let bool = false;  
+let bool = false;           // impede que o drop seja acionado mais de uma vez seguida
 let posicaoInicialItemMovimentado;
 let posicaoFinalItemMovimentado;  
 let enderecoLixeira = "images/delete_transparente.png";  
@@ -54,10 +54,7 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
             <span class="espacamento">${tarefa.nome}</span>
             <span class="espacamento">${duracaoString}</span>
         `;
-
-        // if (tarefas.length === 1 && !document.querySelector(".titulos")) {
-        //     document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="titulos"><span class="espacamento"></span><span class="espacamento">INÍCIO</span><span class="espacamento">TAREFA</span><span class="espacamento">DURAÇÃO</span></p>`);          
-        // }
+ 
 
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `
             <p 
@@ -190,8 +187,7 @@ function dragAndDrop() {
                 return valorInicial
             }
         }, {offset: Number.NEGATIVE_INFINITY}).element
- 
-        deletar();
+  
     }
 
     
@@ -201,23 +197,19 @@ function dragAndDrop() {
         
         
         if (bool === false) {       // impede que o evento seja acionado mais de uma vez seguida
-                 
-            let id = document.querySelector(".tarefa-selecionada").id.split("-")[1];  
-            
-            posicaoInicialItemMovimentado = document.querySelector(".tarefa-selecionada").id.slice(id); 
+                   
+            posicaoInicialItemMovimentado = document.querySelector(".tarefa-selecionada").id.split("-")[1]; 
 
             for (let i = 0; i < document.querySelectorAll(".tarefa-item").length; i++) {
 
-                let idNumber = document.querySelectorAll(".tarefa-item")[i].id.slice(id); 
+                let idNumber = document.querySelectorAll(".tarefa-item")[i].id.split("-")[1]; 
 
                 if (posicaoInicialItemMovimentado == idNumber) {
                     posicaoFinalItemMovimentado = i;
                 }
  
             }
- 
-
-
+  
 
             if (posicaoFinalItemMovimentado != posicaoInicialItemMovimentado) {
  
@@ -271,17 +263,7 @@ function atualizaHorarios () {
         calculaHorarios2 (i);
         
         tarefas[i].final = finalTarefa;
-
-        // let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
  
-        // if (tarefas[i].inicio === horaAtual) {
-
-        //     if (document.querySelector(".tarefa-atual")) {
-        //         document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
-        //     }
-
-        //     document.getElementById(`tarefa-${i}`).classList.add("tarefa-atual");
-        // }
     }
 
     salvamentoLocal();
@@ -303,21 +285,9 @@ function atualizaHorarios () {
         `;
 
         document.getElementById(`tarefa-${index}`).innerHTML = novoTexto;
-        
-        // let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
- 
-        // if (cadaTarefa.inicio === horaAtual) {
-
-        //     if (document.querySelector(".tarefa-atual")) {
-        //         document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
-        //     }
-
-        //     document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
-        // }
+         
     });
-
-    // document.querySelector(".console").insertAdjacentHTML("beforeend", `TAREFAS FINAL = ${JSON.stringify(tarefas)} <br>`);   
- 
+  
 }
 
   
@@ -369,17 +339,18 @@ function deletar() {
         enderecoLixeira = "images/delete_transparente.png";  
     });
 
+
     document.querySelectorAll(".tarefa-item").forEach(tarefa => { 
 
-        let id = tarefa.id.split("-")[1];  
+        // let id = tarefa.id.split("-")[1];  
             
         tarefa.addEventListener('mouseenter', function(event) {
-            document.getElementById(`lixeira-${event.target.id.slice(7, undefined)}`).src = "images/delete.png";
+            document.getElementById(`lixeira-${event.target.id.split("-")[1]}`).src = "images/delete.png";
             enderecoLixeira = "images/delete.png"; 
         });
 
         tarefa.addEventListener('mouseleave', function(event) {
-            document.getElementById(`lixeira-${event.target.id.slice(7, undefined)}`).src = "images/delete_transparente.png";
+            document.getElementById(`lixeira-${event.target.id.split("-")[1]}`).src = "images/delete_transparente.png";
             enderecoLixeira = "images/delete_transparente.png";  
         });
     });
@@ -387,22 +358,17 @@ function deletar() {
     document.querySelectorAll(".lixeiras").forEach(lixeira => { 
 
         lixeira.addEventListener('click', function(event) { 
-                 
-            // let id = document.querySelector(".tarefa-selecionada").id.split("-")[1];  
+                  
             console.log(event);
-            document.getElementById(`tarefa-${event.target.className.slice(7, undefined)}`).remove();
-            tarefas.splice(event.target.className.slice(7, undefined), 1); 
+            document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove();
+            tarefas.splice(event.target.id.split("-")[1], 1); 
 
             salvamentoLocal();
 
             atualizaHorarios ();
             
             deletar();
-
-            // tarefas.forEach((tarefa, index) => {
-            //     document.querySelector(`.lixeira-${index}`).src = "images/delete_transparente.png";
-            //     enderecoLixeira = "images/delete_transparente.png";  
-            // });
+ 
         });
     });
  
@@ -452,7 +418,14 @@ window.onload = function() {
             <span class="espacamento">${duracaoString}</span>
             `;
   
-            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `<p class="tarefa-item animacao-sobe" draggable="true" id="tarefa-${i}">${novoTexto}</p>`);
+            document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `
+                <p 
+                    class="tarefa-item animacao-sobe" 
+                    draggable="true" 
+                    id="tarefa-${i}">
+                    ${novoTexto}
+                </p>
+            `);
         }
          
        dragAndDrop();  
@@ -490,9 +463,6 @@ window.onload = function() {
                     }, 60000);   
                 }
             } 
-        });
-        
-    }
- 
-}
-
+        }); 
+    } 
+} 
