@@ -176,8 +176,9 @@ input::placeholder {
  
   .all {
     width: 80vw;
+    margin: 0 auto;
   }
-  
+
   .tarefas { 
     width: 100%;
   }
@@ -261,10 +262,13 @@ h1 {
     grid-template-columns: 1fr; 
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
   }
+ 
+}
 
 
-  /* .tarefa-item  { 
-    grid-template-columns: 1fr; 
-    grid-template-rows: 1fr 1fr 1fr 1fr; 
-  } */
+@media (max-height: 750px) {
+ 
+  body {  
+    background-image: none;
+  } 
 }
