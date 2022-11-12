@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Minhas Tarefas</title> 
-		<!-- <link rel="icon" href="images/favicon.png"> -->
+		<link rel="icon" href="images/favicon.png">
 		<link rel="stylesheet" href="styles.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	</head>
@@ -20,21 +20,29 @@
 		<div class="all">
 
 			<div class="input">
-
-				<label for="horario-inicial">1) HORÁRIO QUE DESEJA COMEÇAR A SUA PRIMEIRA TAREFA (HH:MM):</label>
-				<input type="time" id="horario-inicial">    
 				
 				<form>  
-					<label for="tarefa">2) NOME:</label>
-					<input type="text" placeholder="Nome da tarefa" id="tarefa" autocomplete="off">					
+					<div class="form-horario">
+						<label for="horario-inicial">1) HORÁRIO QUE DESEJA COMEÇAR A SUA PRIMEIRA TAREFA (HH:MM):</label>
+						<input type="time" id="horario-inicial">    
+					</div>
+					
+					<div class="form-nome-duracao">
+						<div class="form-nome">
+							<label for="tarefa">2) NOME:</label>
+							<input type="text" placeholder="Nome da tarefa" id="tarefa" autocomplete="off">					
+						</div>
 
-					<label for="duracao">DURAÇÃO (HH:MM):</label>
-					<input type="time" id="duracao">   
-
-					<button class="btn-enviar">ENVIAR</button>
+						<div class="form-duracao">
+							<label for="duracao">DURAÇÃO (HH:MM):</label>
+							<input type="time" id="duracao">   
+						</div>
+						<button class="btn-enviar">ENVIAR</button>
+					</div>
+					
 				</form> 
 				
-				<div class="dica"></div>
+				<!-- <div class="dica"></div> -->
 			</div>
 				
 			<div class="output">

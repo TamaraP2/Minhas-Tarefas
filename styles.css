@@ -63,6 +63,7 @@ h1 {
 form {
   padding-top: 20px;
   display:flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -105,6 +106,7 @@ input::placeholder {
   border: 1px solid black; 
   height: 30px;
   background-color: rgba(245,130,145,255);
+  color: black;
   color: white;
   cursor: pointer;
   margin-left: 20px;
@@ -116,6 +118,7 @@ input::placeholder {
 }
 
 .btn-enviar:hover {
+  color: black;
   background-color: rgb(247, 90, 111);
   transition: 0.2s;
 }
@@ -137,11 +140,12 @@ input::placeholder {
   cursor: move;
   display: block;
   display: grid;
-  grid-template-columns: 2vw 10vw 20vw 10vw;
+  grid-template-columns: 2vw 10vw 20vw 10vw;   
   justify-items: center; 
   border-top: 1px dashed black;
   border-bottom: 1px dashed black;
   margin-top: -1px;
+  justify-content: center;
   /* transition: 0.5s;
   transform: translateY(-150px);  */
   /* animation: appear 0.5s; */
@@ -178,7 +182,9 @@ p:last-child:not(.descricao) {
 /*} */
 
 .lixeiras {  
+  padding-left: 30px;
   cursor: pointer;
+  z-index: 10;
 }
 
 .digite-horario,
@@ -208,8 +214,9 @@ p:last-child:not(.descricao) {
 .titulos {
   padding: 20px 0;
   display: grid;
-  grid-template-columns: 2vw 10vw 20vw 10vw;
+  grid-template-columns: 2vw 10vw 20vw 10vw; 
   font-weight: bolder;
+  justify-content: center;
 }
 
 .titulos .espacamento {
@@ -218,6 +225,7 @@ p:last-child:not(.descricao) {
 
 .tarefa-atual {
   background-color: rgb(251,186,194);
+  background-color: rgba(245,130,145);
 }
 
 /* 
@@ -228,13 +236,48 @@ p:last-child:not(.descricao) {
 .table-body {
 	color: #323333;
 } */
+.form-horario {
+  margin-bottom: 20px;
+}
+
+.form-nome-duracao {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
 /* ====================================================== */
 /* ==================== MEDIA QUERIES =================== */
 /* ====================================================== */
 
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
+ 
+  .tarefas { 
+    width: 80vw;
+  }
+
+  .titulos { 
+    grid-template-columns: 2vw 15vw 35vw 15vw; 
+  }
+  
+  .tarefa-item { 
+    grid-template-columns: 2vw 15vw 35vw 15vw; 
+  }
+
+  .lixeiras {  
+    padding-left: 0;
+    padding-right: 30px;
+    cursor: pointer;
+  }
+}
  
 
+@media (max-width: 550px) {
+
+  .form-nome-duracao { 
+    flex-direction: column;
+    gap: 15px; 
+  }
 }
