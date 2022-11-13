@@ -6,17 +6,13 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box; 
-  /* font-family: Arial, Helvetica, sans-serif; */
-  font-family: 'Patrick Hand', cursive;
-  text-align: center; 
-  /* letter-spacing: 0.1rem;
-  font-size: 1.2rem; */
-  font-family: 'Edu QLD Beginner', cursive;
+  box-sizing: border-box;  
+  text-align: center;   
   font-family: 'Poppins', sans-serif;
 }
 
 body {  
+  --colunas-tabelas: 2vw 10vw 20vw 10vw;   
   background-color: rgba(254,235,232,255);
   background-image: url(images/background\.jpg);
   background-size: cover;   
@@ -126,7 +122,7 @@ input::placeholder {
 .titulos {
   padding: 10px 0;
   display: grid;
-  grid-template-columns: 2vw 10vw 20vw 10vw; 
+  grid-template-columns: var(--colunas-tabelas); 
   font-weight: bolder;
   justify-content: center;
 }
@@ -139,7 +135,7 @@ input::placeholder {
   font-size: 1.3rem; 
   cursor: move; 
   display: grid;
-  grid-template-columns: 2vw 10vw 20vw 10vw; 
+  grid-template-columns: var(--colunas-tabelas);
   border-top: 1px dashed black;
   border-bottom: 1px dashed black;
   margin-top: -1px;

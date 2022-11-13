@@ -374,35 +374,7 @@ function deletar() {
             deletar();
         });
     });
-
-
-
-    
-    // let eventoClick = function(event) { 
-            
-    //     if (document.getElementById(`tarefa-${event.target.id.split("-")[1]}`)) {
-    //         document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove();
-    //         tarefas.splice(event.target.id.split("-")[1], 1); 
-    //     }           
-    
-    //     salvamentoLocal();
-
-    //     atualizaHorarios ();
-        
-    //     deletar();
-
-    // };
-
-    // document.querySelectorAll(".lixeiras").forEach(lixeira => { 
-         
-    //     lixeira.removeEventListener('click', eventoClick);
-         
-    //     lixeira.addEventListener('click', eventoClick);
-        
-    // });
- 
-    // salvamentoLocal();
-     
+  
 } 
 
 
@@ -456,39 +428,16 @@ window.onload = function() {
                 </p>
             `);
         }
-         
-    //    dragAndDrop();  
-
-    atualizaHorarios(); 
+           
+        atualizaHorarios(); 
 
     }
- 
-  
-    
-    // setInterval(taNaHora, 1000);
-    // let chamouHora = false;
-    
-    // function taNaHora () {
-
-    //     let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
-    //     let segundos = new Date().toLocaleTimeString().split(":")[2]; 
-
-    //     if (segundos == "00" && chamouHora === false) {
-    //         hora (horaAtual);
-    //         deletar();
-    //         chamouHora = true;
-    //     }
-    // }
-
-
+   
     dragAndDrop();  
- 
-    let chamouDeletar = false;
+  
     let alarmeTocou = false;
     setInterval(hora, 1000);
-    
-    // atualizaHorarios(); 
-
+      
     function hora () {  
 
         let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
@@ -522,8 +471,7 @@ window.onload = function() {
                     document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
                 }
             }
-
-  
+ 
         }); 
           
     } 
