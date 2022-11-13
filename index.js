@@ -28,7 +28,7 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
     if (document.getElementById("horario-inicial").value !== "") {
         horarioInicial = document.getElementById("horario-inicial").value; 
         if (tarefas.length != 0) {
-            atualizaHorarios ();
+            atualizaHorarios (); 
         }
         
         document.getElementById("nome-tarefa").focus(); 
@@ -287,7 +287,8 @@ function atualizaHorarios () {
         document.getElementById(`tarefa-${index}`).innerHTML = novoTexto;
          
     });
-  
+ 
+    deletar();
 }
 
   
@@ -341,9 +342,7 @@ function deletar() {
 
 
     document.querySelectorAll(".tarefa-item").forEach(tarefa => { 
-
-        // let id = tarefa.id.split("-")[1];  
-            
+  
         tarefa.addEventListener('mouseenter', function(event) {
             document.getElementById(`lixeira-${event.target.id.split("-")[1]}`).src = "images/delete.png";
             enderecoLixeira = "images/delete.png"; 
@@ -355,9 +354,14 @@ function deletar() {
         });
     });
 
+
     document.querySelectorAll(".lixeiras").forEach(lixeira => { 
 
+        console.log("entrou no foreach click");
+
         lixeira.addEventListener('click', function(event) { 
+            
+        console.log("entrou no addEventListener");
                   
             console.log(event);
             document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove();
@@ -368,11 +372,36 @@ function deletar() {
             atualizaHorarios ();
             
             deletar();
- 
         });
     });
+
+
+
+    
+    // let eventoClick = function(event) { 
+            
+    //     if (document.getElementById(`tarefa-${event.target.id.split("-")[1]}`)) {
+    //         document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove();
+    //         tarefas.splice(event.target.id.split("-")[1], 1); 
+    //     }           
+    
+    //     salvamentoLocal();
+
+    //     atualizaHorarios ();
+        
+    //     deletar();
+
+    // };
+
+    // document.querySelectorAll(".lixeiras").forEach(lixeira => { 
+         
+    //     lixeira.removeEventListener('click', eventoClick);
+         
+    //     lixeira.addEventListener('click', eventoClick);
+        
+    // });
  
-    salvamentoLocal();
+    // salvamentoLocal();
      
 } 
 
@@ -392,12 +421,12 @@ function salvamentoLocal () {
 
 
 window.onload = function() { 
- 
-    if (localStorage.getItem('horarioInicial') != null) { 
+    
+    if (localStorage.getItem('horarioInicial') != undefined) {   
         document.getElementById("horario-inicial").value = JSON.parse(localStorage.getItem("horarioInicial"));
     }
 
-    if (document.querySelector(".tarefas").childNodes.length === 3 && localStorage.getItem('tarefasLS') != null) { 
+    if (document.querySelector(".tarefas").childNodes.length === 3 && localStorage.getItem('tarefasLS')) { 
         
         let tarefasLS = JSON.parse(localStorage.getItem('tarefasLS'));
         horarioInicial = JSON.parse(localStorage.getItem("horarioInicial"));
@@ -428,41 +457,75 @@ window.onload = function() {
             `);
         }
          
-       dragAndDrop();  
+    //    dragAndDrop();  
 
-       deletar();
+    atualizaHorarios(); 
+
     }
  
+  
+    
+    // setInterval(taNaHora, 1000);
+    // let chamouHora = false;
+    
+    // function taNaHora () {
 
+    //     let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
+    //     let segundos = new Date().toLocaleTimeString().split(":")[2]; 
+
+    //     if (segundos == "00" && chamouHora === false) {
+    //         hora (horaAtual);
+    //         deletar();
+    //         chamouHora = true;
+    //     }
+    // }
+
+
+    dragAndDrop();  
+ 
+    let chamouDeletar = false;
     let alarmeTocou = false;
     setInterval(hora, 1000);
+    
+    // atualizaHorarios(); 
 
-    function hora () { 
+    function hora () {  
 
         let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
-        
-        if (document.querySelector(".tarefa-atual")) {
-            document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
-        }
-
+  
         tarefas.forEach((tarefa, index) => {
-                
-            if (tarefa.inicio === horaAtual) {
- 
+                 
+            if (horaAtual === tarefa.inicio) {
+     
                 document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
- 
+    
                 if (alarmeTocou === false) {
 
                     let alarme = new Audio('sounds/alarme.mp3');
                     alarme.volume = 0.05;
                     alarme.play(); 
-                    alarmeTocou = true;     
+
+                    alarmeTocou = true;      
+
+                    atualizaHorarios(); 
 
                     setTimeout(() => { 
-                        alarmeTocou = false;
-                    }, 60000);   
+                        alarmeTocou = false; 
+                    }, 60000);    
+                }               
+
+            }         
+            
+            if (horaAtual === tarefa.final) { 
+  
+                if (document.querySelector(".tarefa-atual")) {
+                    document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
                 }
-            } 
+            }
+
+  
         }); 
+          
     } 
-} 
+    
+}  
