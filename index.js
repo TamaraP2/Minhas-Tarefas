@@ -9,7 +9,7 @@ let horarioInicial;
 let inicioTarefa;
 let finalTarefa;
 let duracaoString;
-let bool = false;           // impede que o drop seja acionado mais de uma vez seguida
+let dropAcionado = false;           // impede que o drop seja acionado mais de uma vez seguida
 let posicaoInicialItemMovimentado;
 let posicaoFinalItemMovimentado;  
 let enderecoLixeira = "images/delete_transparente.png";  
@@ -148,7 +148,7 @@ function dragAndDrop() {
 
         tarefa.addEventListener('dragstart', function (event) {   
             event.dataTransfer.setDragImage(event.target, window.outerWidth, window.outerHeight); 
-            bool = false;   
+            dropAcionado = false;   
             this.classList.add("tarefa-selecionada");
             this.classList.remove("animacao-sobe");
         });
@@ -196,7 +196,7 @@ function dragAndDrop() {
         event.preventDefault();   
         
         
-        if (bool === false) {       // impede que o evento seja acionado mais de uma vez seguida
+        if (dropAcionado === false) {       // impede que o evento seja acionado mais de uma vez seguida
                    
             posicaoInicialItemMovimentado = document.querySelector(".tarefa-selecionada").id.split("-")[1]; 
 
@@ -213,7 +213,7 @@ function dragAndDrop() {
 
             if (posicaoFinalItemMovimentado != posicaoInicialItemMovimentado) {
  
-                bool = true;
+                dropAcionado = true;
     
                 let itemMovimentado = tarefas.splice(posicaoInicialItemMovimentado, 1);  
   

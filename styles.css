@@ -12,7 +12,7 @@
 }
 
 body {  
-  --colunas-tabelas: 2vw 10vw 20vw 10vw;   
+  --colunas-tabela: 2vw 10vw 20vw 10vw;   
   background-color: rgba(254,235,232,255);
   background-image: url(images/background\.jpg);
   background-size: cover;   
@@ -122,7 +122,7 @@ input::placeholder {
 .titulos {
   padding: 10px 0;
   display: grid;
-  grid-template-columns: var(--colunas-tabelas); 
+  grid-template-columns: var(--colunas-tabela); 
   font-weight: bolder;
   justify-content: center;
 }
@@ -135,7 +135,7 @@ input::placeholder {
   font-size: 1.3rem; 
   cursor: move; 
   display: grid;
-  grid-template-columns: var(--colunas-tabelas);
+  grid-template-columns: var(--colunas-tabela);
   border-top: 1px dashed black;
   border-bottom: 1px dashed black;
   margin-top: -1px;
