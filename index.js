@@ -26,9 +26,11 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
     e.preventDefault();
     
     if (document.getElementById("horario-inicial").value !== "") {
-        horarioInicial = document.getElementById("horario-inicial").value; 
-        if (tarefas.length != 0) {
-            atualizaHorarios (); 
+        if (horarioInicial != document.getElementById("horario-inicial").value){ 
+            horarioInicial = document.getElementById("horario-inicial").value; 
+            if (tarefas.length > 0) {
+                atualizaHorarios (); 
+            }
         }
         
         document.getElementById("nome-tarefa").focus(); 
@@ -36,7 +38,8 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
     
     if (document.getElementById("nome-tarefa").value !== "" && document.getElementById("duracao").value !== "") { 
         
-        calculaHorarios(); 
+        // atualizaHorarios (); 
+        calculaHorarios(1, tarefas.length); 
 
         let tarefa = {
             posicao: tarefas.length, 
@@ -68,7 +71,11 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
         document.getElementById("nome-tarefa").value = "";
         document.getElementById("duracao").value = "";
         document.getElementById("nome-tarefa").focus(); 
-    
+
+        if (document.querySelector(".tarefa-atual")) {
+            document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
+        }
+        
         deletar();
 
         dragAndDrop();  
@@ -84,15 +91,24 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
 /* ====================================================== */
 
 
-function calculaHorarios () {  
+function calculaHorarios (num, index) {  
+  
+    console.log(`entrou no calcula horarios   num = ${num}    index = ${index}`);
 
-    tarefas.length === 0 ? inicioTarefa = horarioInicial : inicioTarefa = tarefas[tarefas.length-1].final;
-
+    index === 0 ? inicioTarefa = horarioInicial : inicioTarefa = tarefas[index-1].final;
+  
     let inicioTarefaTotal = inicioTarefa.split(":");
     let inicioTarefaHoras = Number(inicioTarefaTotal[0]);
     let inicioTarefaMinutos = Number(inicioTarefaTotal[1]);
 
-    let duracaoTotal = document.getElementById("duracao").value.split(":");
+    let duracaoTotal;
+    
+    if (num === 1) {
+        duracaoTotal = document.getElementById("duracao").value.split(":");
+    } else if (num === 2) {
+        duracaoTotal = tarefas[index].duracao.split(":"); 
+    }
+ 
     let duracaoHoras = Number(duracaoTotal[0]);
     let duracaoMinutos = Number(duracaoTotal[1]);
         
@@ -144,6 +160,8 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
 
 function dragAndDrop() {
   
+    console.log(`entrou no drag and drop`);
+
     document.querySelectorAll(".tarefa-item").forEach(tarefa => {
 
         tarefa.addEventListener('dragstart', function (event) {   
@@ -228,9 +246,7 @@ function dragAndDrop() {
                     }
               
                 });
-  
-                salvamentoLocal();
-
+    
                 atualizaHorarios ();
                 
                 deletar();
@@ -251,53 +267,59 @@ function dragAndDrop() {
 
 function atualizaHorarios () {
 
+    console.log(`entrou no atualiza horarios `);
     
     for (let i = 0; i < tarefas.length; i++) {
-    
-        i === 0 ? tarefas[i].inicio = horarioInicial : tarefas[i].inicio = tarefas[i-1].final 
-
+        
+        calculaHorarios (2, i);
+        
         tarefas[i].posicao = i; 
-        
-        salvamentoLocal();
-
-        calculaHorarios2 (i);
-        
+        tarefas[i].inicio = inicioTarefa;
         tarefas[i].final = finalTarefa;
+        
+        // i === 0 ? tarefas[i].inicio = horarioInicial : tarefas[i].inicio = tarefas[i-1].final 
+        // salvamentoLocal();
+      
+        document.querySelectorAll(".tarefa-item")[i].id = `tarefa-${i}`;
  
-    }
-
-    salvamentoLocal();
-
-    document.querySelectorAll(".tarefa-item").forEach((cadaTarefa, index) => {
-          
-        cadaTarefa.id = `tarefa-${index}`;
-           
-        let duracaoHoras = Number(tarefas[index].duracao.split(":")[0]);
-        let duracaoMin = Number(tarefas[index].duracao.split(":")[1]);
-
-        formatacaoDuracao(duracaoHoras, duracaoMin);
-   
         let novoTexto = `
-            <img class="lixeiras" id="lixeira-${index}" src=${enderecoLixeira}>
-            <span class="espacamento">${tarefas[index].inicio}</span>
-            <span class="espacamento">${tarefas[index].nome}</span>
+            <img class="lixeiras" id="lixeira-${i}" src=${enderecoLixeira}>
+            <span class="espacamento">${tarefas[i].inicio}</span>
+            <span class="espacamento">${tarefas[i].nome}</span>
             <span class="espacamento">${duracaoString}</span>
         `;
 
-        document.getElementById(`tarefa-${index}`).innerHTML = novoTexto;
-         
-    });
- 
-    deletar();
+        document.getElementById(`tarefa-${i}`).innerHTML = novoTexto;
+
+        // deletar(); 
+    }
+
+    salvamentoLocal();
+    // deletar(); 
 }
+
+    // document.querySelectorAll(".tarefa-item").forEach((cadaTarefa, index) => {
+          
+    //     cadaTarefa.id = `tarefa-${index}`;
+           
+    //     let duracaoHoras = Number(tarefas[index].duracao.split(":")[0]);
+    //     let duracaoMin = Number(tarefas[index].duracao.split(":")[1]);
+
+    //     formatacaoDuracao(duracaoHoras, duracaoMin);
+   
+         
+    // });
+ 
 
   
 /* ====================================================== */
 /* ================== CALCULA HORÁRIOS 2 ================ */
 /* ====================================================== */
 
-function calculaHorarios2 (posicao) {  
+function calculaHorarios20 (posicao) {  
     
+    console.log(`entrou no calcula horarios20`);
+
     let inicioTarefaTotal = tarefas[posicao].inicio.split(":");  
     let inicioTarefaHoras = Number(inicioTarefaTotal[0]);
     let inicioTarefaMinutos = Number(inicioTarefaTotal[1]); 
@@ -335,7 +357,25 @@ function calculaHorarios2 (posicao) {
 
 function deletar() {  
   
-    tarefas.forEach((tarefa, index) => {
+    console.log(`entrou no deletar`);
+    
+    // document.querySelectorAll(".lixeiras").forEach(lixeira => {  
+
+    //     if (lixeira.classList.contains("click")) {
+    //         lixeira.removeEventListener('click', lixeiraClick);
+    //     }
+    // });
+
+    
+    // document.querySelectorAll(".lixeiras").forEach(lixeira => {  
+    //     if (lixeira.classList.contains("click")) { 
+    //         lixeira.removeEventListener('click', lixeiraClick);
+    //         lixeira.classList.remove("click"); 
+    //     }
+    // });
+
+
+    document.querySelectorAll(".lixeiras").forEach((lixeira, index) => {
         document.getElementById(`lixeira-${index}`).src = "images/delete_transparente.png";
         enderecoLixeira = "images/delete_transparente.png";  
     });
@@ -355,25 +395,42 @@ function deletar() {
     });
 
 
-    document.querySelectorAll(".lixeiras").forEach(lixeira => { 
-
-        console.log("entrou no foreach click");
-
-        lixeira.addEventListener('click', function(event) { 
-            
-        console.log("entrou no addEventListener");
-                  
-            console.log(event);
-            document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove();
-            tarefas.splice(event.target.id.split("-")[1], 1); 
-
-            salvamentoLocal();
-
-            atualizaHorarios ();
-            
-            deletar();
-        });
+    document.querySelectorAll(".lixeiras").forEach(lixeira => {  
+        if (!lixeira.classList.contains("click")) {
+            lixeira.addEventListener('click', lixeiraClick); 
+            lixeira.classList.add("click");
+        }
     });
+
+ 
+
+    function lixeiraClick (event) {
+  
+        console.log(event);
+
+        event.stopPropagation(); 
+
+        console.log(`tarefa-${event.target.id.split("-")[1]}`);
+             
+        document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove();
+        console.log(`tarefas antes do splice = ${JSON.stringify(tarefas)}`);
+        tarefas.splice(event.target.id.split("-")[1], 1);  
+        console.log(`tarefas depois do splice = ${JSON.stringify(tarefas)}`);
+
+
+        document.querySelectorAll(".lixeiras").forEach(lixeira => {  
+            if (lixeira.classList.contains("click")) {
+                console.log("lixeira.classList = " + lixeira.classList);
+                lixeira.removeEventListener('click', lixeiraClick);
+                lixeira.classList.remove("click");
+                console.log("lixeira.classList = " + lixeira.classList);
+            }
+        });
+ 
+        atualizaHorarios ();
+        
+        deletar();
+    }
   
 } 
 
@@ -386,6 +443,8 @@ function deletar() {
 
 function salvamentoLocal () {
         
+    console.log(`entrou no salvamentoLocal`);
+
     window.localStorage.clear();
     window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
     window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
@@ -394,6 +453,8 @@ function salvamentoLocal () {
 
 window.onload = function() { 
     
+    console.log(`entrou no window.onloead`);
+
     if (localStorage.getItem('horarioInicial') != undefined) {   
         document.getElementById("horario-inicial").value = JSON.parse(localStorage.getItem("horarioInicial"));
     }
@@ -429,51 +490,184 @@ window.onload = function() {
             `);
         }
            
-        atualizaHorarios(); 
+        // atualizaHorarios(); 
 
     }
    
     dragAndDrop();  
-  
+    deletar();
+
     let alarmeTocou = false;
     setInterval(hora, 1000);
-      
+    let horarioDeAlgumaTarefa = false;
+    let indexTarefaAtual = -1;
+
     function hora () {  
 
+        let cont = 0;
         let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
+        let horaCompleta = new Date().toLocaleTimeString();
+        let segundos = horaCompleta.split(":")[2];
+        console.log(segundos);
+        
+        if (document.querySelector(".tarefa-atual")) {
+            indexTarefaAtual = document.querySelector(".tarefa-atual").id.split("-")[1]; 
+        }
+
+        for (let i = 0; i < tarefas.length; i++) {
   
-        tarefas.forEach((tarefa, index) => {
-                 
-            if (horaAtual === tarefa.inicio) {
-     
-                document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
-    
+            if (horaAtual === tarefas[i].inicio) {
+                     
+                document.getElementById(`tarefa-${i}`).classList.add("tarefa-atual");
+                indexTarefaAtual = i;
+
                 if (alarmeTocou === false) {
+                    alarme();
+                }
+            }    
+         
 
-                    let alarme = new Audio('sounds/alarme.mp3');
-                    alarme.volume = 0.05;
-                    alarme.play(); 
+            else if (indexTarefaAtual < tarefas.length && indexTarefaAtual != -1 && horaAtual == tarefas[indexTarefaAtual].final) {
 
-                    alarmeTocou = true;      
-
-                    atualizaHorarios(); 
-
-                    setTimeout(() => { 
-                        alarmeTocou = false; 
-                    }, 60000);    
-                }               
-
-            }         
-            
-            if (horaAtual === tarefa.final) { 
-  
+                console.log("entrou no if, indexTarefaAtual = " + indexTarefaAtual);
                 if (document.querySelector(".tarefa-atual")) {
-                    document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
+                    document.querySelector(".tarefa-atual").classList.remove("tarefa-atual"); 
+                    alarmeTocou = false; 
                 }
             }
+        }
+
+
+        tarefas.forEach((tarefa, index) => {
+
+            durante(tarefa.inicio.split(":")[0], tarefa.inicio.split(":")[1], tarefa.final.split(":")[0], tarefa.final.split(":")[1], index);
+        });
+
  
-        }); 
+        function durante(horaInicioTarefa, minutoInicioTarefa, horaFinalTarefa, minutoFinalTarefa, index) {
+
+            let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
+        
+            let hora = horaAtual.split(":")[0];
+            let minutos = horaAtual.split(":")[1]; 
+         
+            let horarioAtual = Date.UTC(2022, 10, 15, hora, minutos);
+            let começoTarefa = Date.UTC(2022, 10, 15, horaInicioTarefa, minutoInicioTarefa);
+            let fimTarefa = Date.UTC(2022, 10, 15, horaFinalTarefa, minutoFinalTarefa);
+ 
+            if (horarioAtual >= começoTarefa && horarioAtual < fimTarefa) {
+
+                document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
+            }
+        }
+        
+
+
+
+
+
+
+
+
+         
+    }
+
+    function alarme() {
+
+        let alarme = new Audio('sounds/alarme.mp3');
+        alarme.volume = 0.05;
+        alarme.play(); 
+        
+        alarmeTocou = true;    
+        deletar();
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // let indexTarefaAtual = -1;
+        // if (alarmeTocou === true && horaAtual === tarefas[indexTarefaAtual+1].inicio) {
+        //     alarmeTocou = false; 
+        // }
+        
+
+
+
+
+
+
+
+        // tarefas.forEach((tarefa, index) => {
+                  
+        //     if (horaAtual === tarefa.inicio) {
+                     
+        //         document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
+                    
+        //         if (alarmeTocou === false) {
+
+        //             let alarme = new Audio('sounds/alarme.mp3');
+        //             alarme.volume = 0.05;
+        //             alarme.play(); 
+
+        //             deletar();
+
+        //             alarmeTocou = true;    
+        //             // indexTarefaAtual = index;
+
+        //             // setTimeout(() => {  
+        //             //     proximoAlarme(); 
+        //             // }, 5000);    
+        //         }     
+ 
+        //     }         
+            
+        //     else if (horaAtual === tarefa.final) { 
+        //         if (document.querySelector(".tarefa-atual")) {
+        //             document.querySelector(".tarefa-atual").classList.remove("tarefa-atual"); 
+        //             if (alarmeTocou === true){
+        //                 alarmeTocou = false; 
+        //             }  
+        //         }
+        //     }
+ 
+        // }); 
+
+
+
+
+
+        // function proximoAlarme() {
+ 
+        //     if (segundos === "00") {  
+        //         console.log("entrou no if do proximo alarme");      
+        //         alarmeTocou = false; 
+        //     }
+        // }
           
-    } 
-    
-}  
+      
