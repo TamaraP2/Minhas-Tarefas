@@ -37,8 +37,7 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
     }
     
     if (document.getElementById("nome-tarefa").value !== "" && document.getElementById("duracao").value !== "") { 
-        
-        // atualizaHorarios (); 
+         
         calculaHorarios(1, tarefas.length); 
 
         let tarefa = {
@@ -57,8 +56,7 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
             <span class="espacamento">${tarefa.nome}</span>
             <span class="espacamento">${duracaoString}</span>
         `;
- 
-
+  
         document.querySelector(".tarefas").insertAdjacentHTML("beforeend", `
             <p 
                 class="tarefa-item animacao-sobe" 
@@ -75,7 +73,7 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
         if (document.querySelector(".tarefa-atual")) {
             document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
         }
-        
+
         deletar();
 
         dragAndDrop();  
@@ -92,9 +90,7 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
 
 
 function calculaHorarios (num, index) {  
-  
-    console.log(`entrou no calcula horarios   num = ${num}    index = ${index}`);
-
+    
     index === 0 ? inicioTarefa = horarioInicial : inicioTarefa = tarefas[index-1].final;
   
     let inicioTarefaTotal = inicioTarefa.split(":");
@@ -159,9 +155,7 @@ function formatacaoDuracao(duracaoHoras, duracaoMinutos) {
 
 
 function dragAndDrop() {
-  
-    console.log(`entrou no drag and drop`);
-
+    
     document.querySelectorAll(".tarefa-item").forEach(tarefa => {
 
         tarefa.addEventListener('dragstart', function (event) {   
@@ -250,14 +244,10 @@ function dragAndDrop() {
                 atualizaHorarios ();
                 
                 deletar();
-
-                 
-            }
-
-
+ 
+            } 
         }
-    });
-
+    }); 
 }
 
 
@@ -266,9 +256,7 @@ function dragAndDrop() {
 /* ====================================================== */
 
 function atualizaHorarios () {
-
-    console.log(`entrou no atualiza horarios `);
-    
+  
     for (let i = 0; i < tarefas.length; i++) {
         
         calculaHorarios (2, i);
@@ -276,10 +264,7 @@ function atualizaHorarios () {
         tarefas[i].posicao = i; 
         tarefas[i].inicio = inicioTarefa;
         tarefas[i].final = finalTarefa;
-        
-        // i === 0 ? tarefas[i].inicio = horarioInicial : tarefas[i].inicio = tarefas[i-1].final 
-        // salvamentoLocal();
-      
+          
         document.querySelectorAll(".tarefa-item")[i].id = `tarefa-${i}`;
  
         let novoTexto = `
@@ -290,65 +275,12 @@ function atualizaHorarios () {
         `;
 
         document.getElementById(`tarefa-${i}`).innerHTML = novoTexto;
-
-        // deletar(); 
-    }
-
-    salvamentoLocal();
-    // deletar(); 
-}
-
-    // document.querySelectorAll(".tarefa-item").forEach((cadaTarefa, index) => {
-          
-    //     cadaTarefa.id = `tarefa-${index}`;
-           
-    //     let duracaoHoras = Number(tarefas[index].duracao.split(":")[0]);
-    //     let duracaoMin = Number(tarefas[index].duracao.split(":")[1]);
-
-    //     formatacaoDuracao(duracaoHoras, duracaoMin);
-   
-         
-    // });
  
-
-  
-/* ====================================================== */
-/* ================== CALCULA HORÁRIOS 2 ================ */
-/* ====================================================== */
-
-function calculaHorarios20 (posicao) {  
-    
-    console.log(`entrou no calcula horarios20`);
-
-    let inicioTarefaTotal = tarefas[posicao].inicio.split(":");  
-    let inicioTarefaHoras = Number(inicioTarefaTotal[0]);
-    let inicioTarefaMinutos = Number(inicioTarefaTotal[1]); 
-
-    let duracaoTotal = tarefas[posicao].duracao.split(":");  
-    let duracaoHoras = Number(duracaoTotal[0]);
-    let duracaoMinutos = Number(duracaoTotal[1]); 
-         
-    let horaExtra = 0;
-
-    let somaMinutos = inicioTarefaMinutos + duracaoMinutos;  
-
-    if (somaMinutos > 59) {        
-        somaMinutos = somaMinutos - 60;
-        horaExtra++; 
     }
 
-    let somaHoras = inicioTarefaHoras + duracaoHoras + horaExtra; 
-    
-    if (somaHoras > 23) {
-        somaHoras = somaHoras - 24;
-    }
-
-    let finalTarefaParcial = [somaHoras.toString().padStart(2, "0"), ":", somaMinutos.toString().padStart(2, "0")];  
-
-    finalTarefa = finalTarefaParcial.join("");   
-  
-} 
-
+    salvamentoLocal(); 
+}
+ 
    
     
 /* ====================================================== */
@@ -356,25 +288,7 @@ function calculaHorarios20 (posicao) {
 /* ====================================================== */
 
 function deletar() {  
-  
-    console.log(`entrou no deletar`);
     
-    // document.querySelectorAll(".lixeiras").forEach(lixeira => {  
-
-    //     if (lixeira.classList.contains("click")) {
-    //         lixeira.removeEventListener('click', lixeiraClick);
-    //     }
-    // });
-
-    
-    // document.querySelectorAll(".lixeiras").forEach(lixeira => {  
-    //     if (lixeira.classList.contains("click")) { 
-    //         lixeira.removeEventListener('click', lixeiraClick);
-    //         lixeira.classList.remove("click"); 
-    //     }
-    // });
-
-
     document.querySelectorAll(".lixeiras").forEach((lixeira, index) => {
         document.getElementById(`lixeira-${index}`).src = "images/delete_transparente.png";
         enderecoLixeira = "images/delete_transparente.png";  
@@ -405,25 +319,17 @@ function deletar() {
  
 
     function lixeiraClick (event) {
-  
-        console.log(event);
-
+    
         event.stopPropagation(); 
-
-        console.log(`tarefa-${event.target.id.split("-")[1]}`);
-             
-        document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove();
-        console.log(`tarefas antes do splice = ${JSON.stringify(tarefas)}`);
-        tarefas.splice(event.target.id.split("-")[1], 1);  
-        console.log(`tarefas depois do splice = ${JSON.stringify(tarefas)}`);
+  
+        document.getElementById(`tarefa-${event.target.id.split("-")[1]}`).remove(); 
+        tarefas.splice(event.target.id.split("-")[1], 1);   
 
 
         document.querySelectorAll(".lixeiras").forEach(lixeira => {  
-            if (lixeira.classList.contains("click")) {
-                console.log("lixeira.classList = " + lixeira.classList);
+            if (lixeira.classList.contains("click")) { 
                 lixeira.removeEventListener('click', lixeiraClick);
-                lixeira.classList.remove("click");
-                console.log("lixeira.classList = " + lixeira.classList);
+                lixeira.classList.remove("click"); 
             }
         });
  
@@ -442,9 +348,7 @@ function deletar() {
  
 
 function salvamentoLocal () {
-        
-    console.log(`entrou no salvamentoLocal`);
-
+          
     window.localStorage.clear();
     window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
     window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
@@ -452,9 +356,7 @@ function salvamentoLocal () {
 
 
 window.onload = function() { 
-    
-    console.log(`entrou no window.onloead`);
-
+      
     if (localStorage.getItem('horarioInicial') != undefined) {   
         document.getElementById("horario-inicial").value = JSON.parse(localStorage.getItem("horarioInicial"));
     }
@@ -488,27 +390,19 @@ window.onload = function() {
                     ${novoTexto}
                 </p>
             `);
-        }
-           
-        // atualizaHorarios(); 
-
+        }  
     }
    
     dragAndDrop();  
     deletar();
 
     let alarmeTocou = false;
-    setInterval(hora, 1000);
-    let horarioDeAlgumaTarefa = false;
+    setInterval(hora, 1000); 
     let indexTarefaAtual = -1;
 
     function hora () {  
-
-        let cont = 0;
-        let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
-        let horaCompleta = new Date().toLocaleTimeString();
-        let segundos = horaCompleta.split(":")[2];
-        console.log(segundos);
+ 
+        let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"}); 
         
         if (document.querySelector(".tarefa-atual")) {
             indexTarefaAtual = document.querySelector(".tarefa-atual").id.split("-")[1]; 
@@ -524,9 +418,7 @@ window.onload = function() {
                 if (alarmeTocou === false) {
                     alarme();
                 }
-            }    
-         
-
+            }     
             else if (indexTarefaAtual < tarefas.length && indexTarefaAtual != -1 && horaAtual == tarefas[indexTarefaAtual].final) {
 
                 console.log("entrou no if, indexTarefaAtual = " + indexTarefaAtual);
@@ -559,17 +451,7 @@ window.onload = function() {
 
                 document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
             }
-        }
-        
-
-
-
-
-
-
-
-
-         
+        } 
     }
 
     function alarme() {
@@ -583,91 +465,4 @@ window.onload = function() {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // let indexTarefaAtual = -1;
-        // if (alarmeTocou === true && horaAtual === tarefas[indexTarefaAtual+1].inicio) {
-        //     alarmeTocou = false; 
-        // }
-        
-
-
-
-
-
-
-
-        // tarefas.forEach((tarefa, index) => {
-                  
-        //     if (horaAtual === tarefa.inicio) {
-                     
-        //         document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
-                    
-        //         if (alarmeTocou === false) {
-
-        //             let alarme = new Audio('sounds/alarme.mp3');
-        //             alarme.volume = 0.05;
-        //             alarme.play(); 
-
-        //             deletar();
-
-        //             alarmeTocou = true;    
-        //             // indexTarefaAtual = index;
-
-        //             // setTimeout(() => {  
-        //             //     proximoAlarme(); 
-        //             // }, 5000);    
-        //         }     
  
-        //     }         
-            
-        //     else if (horaAtual === tarefa.final) { 
-        //         if (document.querySelector(".tarefa-atual")) {
-        //             document.querySelector(".tarefa-atual").classList.remove("tarefa-atual"); 
-        //             if (alarmeTocou === true){
-        //                 alarmeTocou = false; 
-        //             }  
-        //         }
-        //     }
- 
-        // }); 
-
-
-
-
-
-        // function proximoAlarme() {
- 
-        //     if (segundos === "00") {  
-        //         console.log("entrou no if do proximo alarme");      
-        //         alarmeTocou = false; 
-        //     }
-        // }
-          
-      
