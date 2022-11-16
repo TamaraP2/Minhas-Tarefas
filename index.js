@@ -84,16 +84,16 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
         document.getElementById("nome-tarefa").value = "";
         document.getElementById("duracao").value = "";
         document.getElementById("nome-tarefa").focus(); 
-
-        if (document.querySelector(".tarefa-atual")) {
-            document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
-        }
-
+ 
         deletar();
 
         dragAndDrop();  
 
         atualizaLocalStorage();
+    }
+    
+    if (document.querySelector(".tarefa-atual")) {
+        document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
     }
 });
 
