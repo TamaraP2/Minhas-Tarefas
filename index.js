@@ -14,8 +14,23 @@ let posicaoInicialItemMovimentado;
 let posicaoFinalItemMovimentado;  
 let enderecoLixeira = "images/delete_transparente.png";  
 
+ 
+
+/* ====================================================== */
+/* ===================== WINDOW ONLOAD ================== */
+/* ====================================================== */
+ 
+
+window.onload = function() { 
+      
+    downloadLocalStorage();
+    dragAndDrop();  
+    deletar();
+    tarefaSelecionada();
+}
 
 
+ 
 /* ====================================================== */
 /* ================ COLETA VALORES INICIAIS ============= */
 /* ====================================================== */
@@ -78,7 +93,7 @@ document.querySelector(".btn-enviar").addEventListener("click", function(e) {
 
         dragAndDrop();  
 
-        salvamentoLocal();
+        atualizaLocalStorage();
     }
 });
 
@@ -278,7 +293,7 @@ function atualizaHorarios () {
  
     }
 
-    salvamentoLocal(); 
+    atualizaLocalStorage(); 
 }
  
    
@@ -333,6 +348,11 @@ function deletar() {
             }
         });
  
+        
+        if (document.querySelector(".tarefa-atual")) {
+            document.querySelector(".tarefa-atual").classList.remove("tarefa-atual");
+        }
+
         atualizaHorarios ();
         
         deletar();
@@ -347,16 +367,16 @@ function deletar() {
 /* ====================================================== */
  
 
-function salvamentoLocal () {
+function atualizaLocalStorage () {
           
     window.localStorage.clear();
     window.localStorage.setItem('tarefasLS', JSON.stringify(tarefas));
     window.localStorage.setItem('horarioInicial', JSON.stringify(horarioInicial));
 }
 
-
-window.onload = function() { 
-      
+ 
+function downloadLocalStorage() {
+ 
     if (localStorage.getItem('horarioInicial') != undefined) {   
         document.getElementById("horario-inicial").value = JSON.parse(localStorage.getItem("horarioInicial"));
     }
@@ -391,55 +411,32 @@ window.onload = function() {
                 </p>
             `);
         }  
-    }
-   
-    dragAndDrop();  
-    deletar();
+    } 
+}
 
+
+
+/* ====================================================== */
+/* ====================== TAREFA ATUAL ================== */
+/* ====================================================== */
+ 
+
+function tarefaSelecionada() {
+ 
     let alarmeTocou = false;
-    setInterval(hora, 1000); 
     let indexTarefaAtual = -1;
+    setInterval(hora, 1000); 
 
     function hora () {  
- 
-        let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"}); 
-        
-        if (document.querySelector(".tarefa-atual")) {
-            indexTarefaAtual = document.querySelector(".tarefa-atual").id.split("-")[1]; 
-        }
-
-        for (let i = 0; i < tarefas.length; i++) {
-  
-            if (horaAtual === tarefas[i].inicio) {
-                     
-                document.getElementById(`tarefa-${i}`).classList.add("tarefa-atual");
-                indexTarefaAtual = i;
-
-                if (alarmeTocou === false) {
-                    alarme();
-                }
-            }     
-            else if (indexTarefaAtual < tarefas.length && indexTarefaAtual != -1 && horaAtual == tarefas[indexTarefaAtual].final) {
-
-                console.log("entrou no if, indexTarefaAtual = " + indexTarefaAtual);
-                if (document.querySelector(".tarefa-atual")) {
-                    document.querySelector(".tarefa-atual").classList.remove("tarefa-atual"); 
-                    alarmeTocou = false; 
-                }
-            }
-        }
-
-
+   
         tarefas.forEach((tarefa, index) => {
-
-            durante(tarefa.inicio.split(":")[0], tarefa.inicio.split(":")[1], tarefa.final.split(":")[0], tarefa.final.split(":")[1], index);
-        });
-
+  
+            let horaInicioTarefa = tarefa.inicio.split(":")[0];
+            let minutoInicioTarefa = tarefa.inicio.split(":")[1];
+            let horaFinalTarefa = tarefa.final.split(":")[0];
+            let minutoFinalTarefa = tarefa.final.split(":")[1];
  
-        function durante(horaInicioTarefa, minutoInicioTarefa, horaFinalTarefa, minutoFinalTarefa, index) {
-
-            let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});
-        
+            let horaAtual = new Date().toLocaleTimeString(navigator.language, {hourCycle: 'h23', hour: "numeric", minute: "numeric"});        
             let hora = horaAtual.split(":")[0];
             let minutos = horaAtual.split(":")[1]; 
          
@@ -447,22 +444,32 @@ window.onload = function() {
             let começoTarefa = Date.UTC(2022, 10, 15, horaInicioTarefa, minutoInicioTarefa);
             let fimTarefa = Date.UTC(2022, 10, 15, horaFinalTarefa, minutoFinalTarefa);
  
+
             if (horarioAtual >= começoTarefa && horarioAtual < fimTarefa) {
 
                 document.getElementById(`tarefa-${index}`).classList.add("tarefa-atual");
-            }
-        } 
-    }
-
-    function alarme() {
-
-        let alarme = new Audio('sounds/alarme.mp3');
-        alarme.volume = 0.05;
-        alarme.play(); 
-        
-        alarmeTocou = true;    
-        deletar();
-    }
-
-}
  
+                indexTarefaAtual = index;
+
+                if (alarmeTocou === false) {
+                    
+                    let alarme = new Audio('sounds/alarme.mp3');
+                    alarme.volume = 0.05;
+                    alarme.play(); 
+                    
+                    alarmeTocou = true;    
+                    deletar();                    
+                } 
+            }
+
+            if (horarioAtual == fimTarefa && index === indexTarefaAtual) {
+
+                if (document.querySelector(".tarefa-atual")) {
+                    document.querySelector(".tarefa-atual").classList.remove("tarefa-atual"); 
+                    alarmeTocou = false; 
+                }
+            } 
+        
+        }); 
+    }  
+}
