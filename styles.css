@@ -1,0 +1,382 @@
+
+/* ====================================================== */
+/* ======================== GERAL ======================= */
+/* ====================================================== */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;  
+  text-align: center;   
+  font-family: 'Poppins', sans-serif;
+}
+
+body {   
+  --colunas-tarefas-hoje: 1fr 3fr 1fr 0.5fr;
+  background-color: rgba(254,235,232,255);
+  background-image: url(images/background\.jpg);
+  background-size: cover;   
+  background-repeat: no-repeat;   
+  margin-bottom: 200px;
+}
+
+.nowrap { 
+  white-space: nowrap;
+}
+
+.container {
+  min-height: 100px;
+}
+
+/* ====================================================== */
+/* ====================== HEADER ======================== */
+/* ====================================================== */
+  
+
+h1 {
+  margin: 15vh 0 40px; 
+} 
+ 
+.descricao { 
+  font-weight: bolder; 
+  font-size: 1.3rem;
+}
+
+ 
+/* ====================================================== */
+/* ======================= INPUT ======================== */
+/* ====================================================== */
+  
+input {
+  border-radius: 500px;
+} 
+ 
+form {
+  padding-top: 20px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+   
+input {
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.219);  
+  height: 30px; 
+  font-size: 1rem; 
+  border: 1px solid black;
+} 
+ 
+input::placeholder {
+  color: rgb(65, 63, 63);
+  font-size: 1rem;  
+}
+ 
+input[type="range"] {
+  accent-color: rgba(245,130,145,255); 
+}
+ 
+.form-nome-duracao {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+ 
+label,
+.dica, 
+.volume {
+  margin: 10px;
+  font-size: 1.1rem;  
+  display: inline-block;
+}
+    
+#volume-alarme {
+  padding: 0; 
+  height: revert; 
+}
+
+.btn-enviar { 
+  display: inline-block;
+  border: 1px solid black; 
+  border-radius: 500px;
+  height: 30px;
+  background-color: rgba(245,130,145,255); 
+  color: white;
+  cursor: pointer; 
+  margin-top: 10px;
+  font-size: 1rem;  
+  font-weight: bolder;
+  letter-spacing: 0.2rem; 
+  padding: 0 8px 0 10px;
+  transition: 0.3s ease-in-out;
+}
+
+.btn-enviar:hover {
+  color: black;
+  background-color: rgb(247, 90, 111);
+  transition: 0.3s ease-in-out;
+} 
+   
+ 
+hr {
+  border-color: rgba(197,124,130,255);
+  border-style: dotted none none none;
+  height: 2px;
+  border-width: 8px;
+  width: 80vw;
+  margin: 35px auto;
+}
+
+
+
+/* ====================================================== */
+/* ====================== OUTPUT ======================== */
+/* ====================================================== */
+
+.output {
+  display: flex; 
+  justify-content: space-evenly;
+  margin: 30px auto 0; 
+  width: 80vw;
+  gap: 40px;
+}
+
+
+/* ====================================================== */
+/* =================== TODAS TAREFAS ==================== */
+/* ====================================================== */
+
+.todas-tarefas {  
+  min-width: 30%;  
+}
+ 
+.ordem {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 15px 0; 
+} 
+
+.todas-tarefas-ordem { 
+  font-size: 1rem;  
+  font-weight: bolder;
+} 
+ 
+.ordenar-a-z,
+.ordenar-duracao { 
+  width: 25px;
+  height: 25px; 
+  cursor: pointer;
+}
+ 
+.todas-tarefas-item { 
+  font-size: 1.3rem;   
+  justify-content: center;
+  align-items: center; 
+  border-top: 1px dashed black;
+  border-bottom: 1px dashed black;
+  margin: 0;
+  margin-top: -1px;
+  display: grid; 
+  grid-template-columns: 0.3fr 2fr 0.8fr;
+}
+  
+.todas-tarefas-nome {
+  margin: 0 10px;
+}
+.animacao-sobe {
+  animation: sobe 1s;
+}
+
+@keyframes sobe {
+  from { 
+    transform: translateY(150px);
+  }
+} 
+
+/* ====================================================== */
+/* ==================== TAREFAS HOJE ==================== */
+/* ====================================================== */
+
+.tarefas-hoje{
+  justify-self: end;
+}
+
+.tarefas-hoje-h2 {
+  display: grid;
+  grid-template-columns: var(--colunas-tarefas-hoje); 
+}
+  
+.tarefas-hoje-container { 
+  margin: 0 auto;  
+} 
+
+.tarefas-hoje-titulos {
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: var(--colunas-tarefas-hoje); 
+  font-weight: bolder; 
+}
+ 
+.tarefas-hoje-titulos .espacamento {
+  font-size: 1.2rem;  
+}
+  
+.tarefas-hoje-item { 
+  font-size: 1.3rem;  
+  display: grid;
+  grid-template-columns: var(--colunas-tarefas-hoje);
+  border-top: 1px dashed black;
+  border-bottom: 1px dashed black;
+  margin-top: -1px;
+  justify-content: center; 
+}
+ 
+.tarefas-hoje-nome {
+  margin: 0 30px;
+}
+
+
+
+/* ====================================================== */
+/* ====================== LIXEIRAS ====================== */
+/* ====================================================== */
+ 
+.todas-tarefas-lixeiras, .tarefas-hoje-lixeiras {  
+  padding-left: 15px;
+  padding-top: 3px;
+  cursor: pointer;
+  z-index: 10;
+}
+ 
+.todas-tarefas-lixeiras {   
+  height: 24px;
+}
+
+ 
+/* ====================================================== */
+/* ======================= TAREFAS ====================== */
+/* ====================================================== */
+ 
+.tarefa-selecionada {
+  color:  rgb(247, 90, 111);
+  font-weight: bolder; 
+}
+    
+.tarefa-atual {  
+  background-color: rgba(245, 130, 145, 0.747);
+}
+    
+.tarefas-arrastaveis {
+  cursor: move; 
+  user-select: none;  
+}
+  
+  
+/* ====================================================== */
+/* ==================== MEDIA QUERIES =================== */
+/* ====================================================== */
+
+@media (max-width: 1200px) {
+
+  body {  
+    background-image: none;
+  } 
+
+  h1 {
+    margin: 5vh 0 40px;
+  }
+
+  .output {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;  
+    gap: 30px;
+    margin: 30px auto 0;
+    justify-items: center;
+    width: 90vw;
+  }  
+
+}
+
+@media (max-width: 1000px) {
+    
+  #horario-inicial {
+    width: 60vw;
+  }
+
+  #nome-tarefa {
+    width: 40vw;
+  }
+
+  #duracao {
+    width: 20vw;
+  }
+  
+  .form-nome-duracao { 
+    flex-direction: column;
+    gap: 15px; 
+  }
+ 
+  .output {  
+    grid-template-columns: none;
+    grid-template-rows: auto auto;  
+  }
+ 
+  .btn-enviar { 
+    margin-bottom: 40px;
+  }
+  
+  .todas-tarefas, .tarefas-hoje  {
+    margin-top: 40px;
+    justify-self: center;
+  }
+}
+ 
+
+@media (max-width: 550px) {
+     
+  .nowrap {
+    white-space: initial;
+  }
+  
+  .tarefas-hoje-h2 h2 { 
+    margin-left: 30px;
+  }
+
+  .tarefas-hoje-titulos {
+    margin-top: 15px;
+    margin-left: 35px;
+  }
+
+  .tarefas-hoje-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+    
+  .tarefas-hoje-item { 
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr 1fr 1fr 0.3fr; 
+    justify-items: center;
+    padding-top: 20px;
+  }
+  
+  
+  .tarefas-hoje-lixeiras {
+    padding: 0 0 20px 0;
+  } 
+  
+}
+
+
+@media (max-height: 750px) {
+ 
+  body {  
+    background-image: none;
+  } 
+}
