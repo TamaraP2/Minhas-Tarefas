@@ -671,6 +671,9 @@ function deletar() {
             todasTarefas[i].posicao = i; 
         };
   
+        for (let i = 0; i < document.querySelectorAll(".todas-tarefas-editar").length; i++) {        
+            document.querySelectorAll(".todas-tarefas-editar")[i].id = `todas-tarefas-editar-${i}`;
+        }
 
         document.querySelectorAll(".todas-tarefas-lixeiras").forEach(lixeira => {  
             if (lixeira.classList.contains("click1")) { 
