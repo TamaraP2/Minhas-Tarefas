@@ -818,8 +818,8 @@ function editar() {
 
         let tarefaEditada = 
             `
-            <input type="text" id="todas-tarefas-novo-nome" placeholder="${todasTarefas[event.target.id.split("-")[3]].nome}" autocomplete="off">
-            <input type="time" id="todas-tarefas-nova-duracao">
+            <input type="text" id="todas-tarefas-novo-nome" value="${todasTarefas[event.target.id.split("-")[3]].nome}" autocomplete="off">
+            <input type="time" id="todas-tarefas-nova-duracao" value="${todasTarefas[event.target.id.split("-")[3]].duracao}">
             <img class="todas-tarefas-close" id="todas-tarefas-close-${event.target.id.split("-")[3]}" src="images/close.png" alt="close">
             <img class="todas-tarefas-salvar" id="todas-tarefas-salvar-${event.target.id.split("-")[3]}" src="images/salvar.png" alt="salvar">
             ` ;
@@ -907,14 +907,12 @@ function editar() {
             tarefa.setAttribute("draggable", false);
             tarefa.style.cursor = "default";
         });
-
-
-
+  
         let tarefaEditada = 
             `
             <span id="espacamento-tempo"></span>
-            <input type="text" id="tarefas-hoje-novo-nome" placeholder="${tarefasHoje[event.target.id.split("-")[3]].nome}" autocomplete="off">
-            <input type="time" id="tarefas-hoje-nova-duracao">
+            <input type="text" id="tarefas-hoje-novo-nome" value="${tarefasHoje[event.target.id.split("-")[3]].nome}" autocomplete="off">
+            <input type="time" id="tarefas-hoje-nova-duracao" value="${tarefasHoje[event.target.id.split("-")[3]].duracao}">
             <img class="tarefas-hoje-close" id="tarefas-hoje-close-${event.target.id.split("-")[3]}" src="images/close.png" alt="close">
             <img class="tarefas-hoje-salvar" id="tarefas-hoje-salvar-${event.target.id.split("-")[3]}" src="images/salvar.png" alt="salvar">
             ` ;
