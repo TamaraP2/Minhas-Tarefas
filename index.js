@@ -797,7 +797,7 @@ function editar() {
  
 
     function editarTodasTarefas (event) {
-       
+         
         document.querySelectorAll(".todas-tarefas-lixeiras").forEach(lixeira => {  
             lixeira.style.opacity = "0";
             lixeira.style.pointerEvents = "none";
@@ -825,8 +825,18 @@ function editar() {
             ` ;
 
         document.getElementById(`todas-tarefas-item-${event.target.id.split("-")[3]}`).innerHTML = tarefaEditada;
-       
-        document.getElementById(`todas-tarefas-salvar-${event.target.id.split("-")[3]}`).addEventListener("click", function () { 
+  
+        document.getElementById(`todas-tarefas-salvar-${event.target.id.split("-")[3]}`).addEventListener("click", salvarEdicao);
+    
+        document.addEventListener("keydown", function salvarEdicaoEnter (event) {
+  
+            if (event.key === "Enter") {
+                salvarEdicao();
+                document.removeEventListener("keydown", salvarEdicaoEnter)
+            }
+        });
+ 
+        function salvarEdicao () { 
             
             if (document.getElementById("todas-tarefas-novo-nome").value !== "" && document.getElementById("todas-tarefas-novo-nome").value !== " ") { 
                 todasTarefas[event.target.id.split("-")[3]].nome = document.getElementById("todas-tarefas-novo-nome").value; 
@@ -841,9 +851,8 @@ function editar() {
             deletar();
             editar();
             atualizaLocalStorage(); 
-        }); 
+        }; 
 
-        
         document.getElementById(`todas-tarefas-close-${event.target.id.split("-")[3]}`).addEventListener("click", function () {  
             
             atualizacaoTarefasHoje(); 
@@ -918,9 +927,18 @@ function editar() {
             ` ;
 
         document.getElementById(`tarefas-hoje-item-${event.target.id.split("-")[3]}`).innerHTML = tarefaEditada;
-     
-
-        document.getElementById(`tarefas-hoje-salvar-${event.target.id.split("-")[3]}`).addEventListener("click", function () { 
+       
+        document.getElementById(`tarefas-hoje-salvar-${event.target.id.split("-")[3]}`).addEventListener("click", salvarEdicao2);
+    
+        document.addEventListener("keydown", function salvarEdicaoEnter2 (event) {
+  
+            if (event.key === "Enter") {
+                salvarEdicao2();
+                document.removeEventListener("keydown", salvarEdicaoEnter2)
+            }
+        });
+ 
+        function salvarEdicao2 () {  
             
             if (document.getElementById("tarefas-hoje-novo-nome").value !== "" && document.getElementById("tarefas-hoje-novo-nome").value !== " ") { 
                 tarefasHoje[event.target.id.split("-")[3]].nome = document.getElementById("tarefas-hoje-novo-nome").value; 
@@ -934,10 +952,9 @@ function editar() {
             atualizacaoTodasTarefas(); 
             deletar();
             editar();
-            atualizaLocalStorage(); 
-        }); 
-
-        
+            atualizaLocalStorage();         
+        }
+  
         document.getElementById(`tarefas-hoje-close-${event.target.id.split("-")[3]}`).addEventListener("click", function () {  
             atualizacaoTarefasHoje(); 
             atualizacaoTodasTarefas(); 
