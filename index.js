@@ -838,11 +838,11 @@ function editar() {
  
         function salvarEdicao () { 
             
-            if (document.getElementById("todas-tarefas-novo-nome").value !== "" && document.getElementById("todas-tarefas-novo-nome").value !== " ") { 
+            if (document.getElementById("todas-tarefas-novo-nome") && document.getElementById("todas-tarefas-novo-nome").value !== "" && document.getElementById("todas-tarefas-novo-nome").value !== " ") { 
                 todasTarefas[event.target.id.split("-")[3]].nome = document.getElementById("todas-tarefas-novo-nome").value; 
             }
 
-            if (document.getElementById("todas-tarefas-nova-duracao").value !== "" && document.getElementById("todas-tarefas-nova-duracao").value !== " ") { 
+            if (document.getElementById("todas-tarefas-nova-duracao") && document.getElementById("todas-tarefas-nova-duracao").value !== "" && document.getElementById("todas-tarefas-nova-duracao").value !== " ") { 
                 todasTarefas[event.target.id.split("-")[3]].duracao = document.getElementById("todas-tarefas-nova-duracao").value;
             }        
  
@@ -953,11 +953,11 @@ function editar() {
  
         function salvarEdicao2 () {  
             
-            if (document.getElementById("tarefas-hoje-novo-nome").value !== "" && document.getElementById("tarefas-hoje-novo-nome").value !== " ") { 
+            if (document.getElementById("tarefas-hoje-novo-nome") && document.getElementById("tarefas-hoje-novo-nome").value !== "" && document.getElementById("tarefas-hoje-novo-nome").value !== " ") { 
                 tarefasHoje[event.target.id.split("-")[3]].nome = document.getElementById("tarefas-hoje-novo-nome").value; 
             }
 
-            if (document.getElementById("tarefas-hoje-nova-duracao").value !== "" && document.getElementById("tarefas-hoje-nova-duracao").value !== " ") { 
+            if (document.getElementById("tarefas-hoje-nova-duracao") && document.getElementById("tarefas-hoje-nova-duracao").value !== "" && document.getElementById("tarefas-hoje-nova-duracao").value !== " ") { 
                 tarefasHoje[event.target.id.split("-")[3]].duracao = document.getElementById("tarefas-hoje-nova-duracao").value;
             }        
  
