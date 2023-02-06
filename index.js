@@ -862,6 +862,19 @@ function editar() {
             atualizaLocalStorage(); 
         }); 
  
+        document.addEventListener("keydown", function cancelarEdicaoEsc (event) {
+  
+            if (event.key === "Escape") {
+                
+                atualizacaoTarefasHoje(); 
+                atualizacaoTodasTarefas(); 
+                deletar();
+                editar();
+                atualizaLocalStorage(); 
+                
+                document.removeEventListener("keydown", cancelarEdicaoEsc)
+            }
+        });
     }
 
 
@@ -930,8 +943,8 @@ function editar() {
        
         document.getElementById(`tarefas-hoje-salvar-${event.target.id.split("-")[3]}`).addEventListener("click", salvarEdicao2);
     
-        document.addEventListener("keydown", function salvarEdicaoEnter2 (event) {
-  
+        document.addEventListener("keydown", function salvarEdicaoEnter2 (event) {   
+
             if (event.key === "Enter") {
                 salvarEdicao2();
                 document.removeEventListener("keydown", salvarEdicaoEnter2)
@@ -963,6 +976,21 @@ function editar() {
             atualizaLocalStorage(); 
         }); 
  
+        document.addEventListener("keydown", function cancelarEdicaoEsc2 (event) {
+  
+
+            if (event.key === "Escape") {
+                
+                atualizacaoTarefasHoje(); 
+                atualizacaoTodasTarefas(); 
+                deletar();
+                editar();
+                atualizaLocalStorage(); 
+                
+                document.removeEventListener("keydown", cancelarEdicaoEsc2)
+            }
+        });
+
     }
  
 } 
